@@ -1,0 +1,16 @@
+@prefix : <http://example.com/> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<http://mapping.example.com/m_1/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://example.com/.*" ;
+    sh:property [ sh:nodeKind sh:IRI ;
+            sh:path :year ],
+        [ sh:nodeKind sh:IRI ;
+            sh:path schema:director ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path schema:name ],
+        [ sh:nodeKind sh:IRI ;
+            sh:path schema:countryOfOrigin ] .
+

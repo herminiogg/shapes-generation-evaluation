@@ -1,0 +1,32 @@
+@prefix :      <http://example.com/> .
+@prefix schema: <http://schema.org/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix dbr:   <http://dbpedia.org/resource/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+:Films  a               sh:NodeShape ;
+        sh:property     [ sh:maxCount  2 ;
+                          sh:minCount  2 ;
+                          sh:nodeKind  sh:IRI ;
+                          sh:path      schema:director
+                        ] ;
+        sh:property     [ sh:maxCount  1 ;
+                          sh:minCount  1 ;
+                          sh:nodeKind  sh:IRI ;
+                          sh:path      schema:countryOfOrigin
+                        ] ;
+        sh:property     [ sh:maxCount  1 ;
+                          sh:minCount  1 ;
+                          sh:nodeKind  sh:IRI ;
+                          sh:path      :year
+                        ] ;
+        sh:property     [ sh:datatype  xsd:string ;
+                          sh:maxCount  1 ;
+                          sh:minCount  1 ;
+                          sh:path      schema:name
+                        ] ;
+        sh:property     [ sh:in    ( schema:Movie ) ;
+                          sh:path  rdf:type
+                        ] ;
+        sh:targetClass  :Films .

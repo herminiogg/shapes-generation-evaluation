@@ -1,0 +1,43 @@
+@prefix :        <https://schema.org/> .
+@prefix schema:  <https://schema.org/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix afn:     <http://jena.apache.org/ARQ/function#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://astrea.linkeddata.es/shapes#0c9c7e5d2b8bc969402273a9d46220e4>
+      a       sh:PropertyShape ;
+      sh:datatype xsd:string ;
+      sh:nodeKind sh:Literal ;
+      sh:path schema:name ;
+      sh:pattern ".*" .
+
+<https://astrea.linkeddata.es/shapes#0d46dd1c97d404f5ed355595777fb7bb>
+      a       sh:PropertyShape ;
+      sh:datatype xsd:anyURI ;
+      sh:nodeKind sh:Literal ;
+      sh:path schema:countryOfOrigin ;
+      sh:pattern "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?" .
+
+<https://astrea.linkeddata.es/shapes#3d2e77dc27c8a649fc58ebe0ec7a860b>
+      a       sh:NodeShape ;
+      sh:nodeKind sh:IRI ;
+      sh:property <https://astrea.linkeddata.es/shapes#0c9c7e5d2b8bc969402273a9d46220e4> , <https://astrea.linkeddata.es/shapes#0d46dd1c97d404f5ed355595777fb7bb> , <https://astrea.linkeddata.es/shapes#cd5b2acbdc83d18ff707cf3714068f7d> , <https://astrea.linkeddata.es/shapes#f32f23dedde408324846d262d6aae4fa> ;
+      sh:targetClass schema:Movie .
+
+<https://astrea.linkeddata.es/shapes#cd5b2acbdc83d18ff707cf3714068f7d>
+      a       sh:PropertyShape ;
+      sh:datatype xsd:anyURI ;
+      sh:nodeKind sh:Literal ;
+      sh:path <http://example.com/year> ;
+      sh:pattern "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?" .
+
+<https://astrea.linkeddata.es/shapes#f32f23dedde408324846d262d6aae4fa>
+      a       sh:PropertyShape ;
+      sh:datatype xsd:anyURI ;
+      sh:nodeKind sh:Literal ;
+      sh:path schema:director ;
+      sh:pattern "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?" .

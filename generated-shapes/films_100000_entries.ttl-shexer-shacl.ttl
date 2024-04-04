@@ -1,0 +1,27 @@
+@prefix default1: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix weso-s: <http://weso.es/shapes/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+weso-s:Movie a sh:NodeShape ;
+    sh:property [ a sh:PropertyShape ;
+            sh:nodeKind sh:IRI ;
+            sh:path schema:director ],
+        [ a sh:PropertyShape ;
+            sh:dataType xsd:string ;
+            sh:path schema:name ],
+        [ a sh:PropertyShape ;
+            sh:nodeKind sh:IRI ;
+            sh:path default1:year ],
+        [ a sh:PropertyShape ;
+            sh:nodeKind sh:IRI ;
+            sh:path schema:countryOfOrigin ],
+        [ a sh:PropertyShape ;
+            sh:in ( schema:Movie ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path rdf:type ] ;
+    sh:targetClass schema:Movie .
+

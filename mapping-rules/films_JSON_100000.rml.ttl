@@ -1,0 +1,64 @@
+@prefix :      <http://example.com/> .
+@prefix schema: <http://schema.org/> .
+@prefix rml:   <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix d2rq:  <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix dbr:   <http://dbpedia.org/resource/> .
+@prefix http:  <http://www.w3.org/2011/http#> .
+@prefix ql:    <http://semweb.mmlab.be/ns/ql#> .
+@prefix map:   <http://mapping.example.com/> .
+
+map:m_1  a                     rr:TriplesMap ;
+        rml:logicalSource      [ a                         rml:LogicalSource ;
+                                 rml:iterator              "$.films[*]" ;
+                                 rml:referenceFormulation  ql:JSONPath ;
+                                 rml:source                "data/films_100000_entries.json"
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://dbpedia.org/resource/{director}" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:director
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://dbpedia.org/resource/{country}" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:countryOfOrigin
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://dbpedia.org/resource/{year}" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :year
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "{name}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:name
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://schema.org/Movie" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+                                                  ]
+                               ] ;
+        rr:subjectMap          [ a            rr:SubjectMap ;
+                                 rr:template  "http://example.com/{id}"
+                               ] .

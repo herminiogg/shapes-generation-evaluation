@@ -1,0 +1,37 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX : <http://example.com/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX schema: <http://schema.org/>
+
+:Films IRI {
+	rdf:type [ schema:Movie ] ;
+	schema:name [ @en ] ;
+	:year xsd:integer  ;
+	schema:countryOfOrigin [ dbr:~ ]  ;
+	schema:director xsd:string  ;
+	:screenwriter xsd:string + ;
+	schema:musicBy xsd:string  ;
+	:cinematographer xsd:string  ;
+	schema:actor @:Actor + ;
+	schema:actor @:Actress + ;
+}
+:Actor IRI {
+	rdf:type [ schema:Person ] ;
+	schema:name xsd:string  ;
+	:appear_on @:AppearanceActor + ;
+}
+:Actress IRI {
+	rdf:type [ schema:Person ] ;
+	schema:name xsd:string  ;
+	:appear_on @:AppearanceActress + ;
+}
+:AppearanceActor IRI {
+	rdf:type [ :Appearance ] ;
+	:role xsd:string  ;
+	:film [ :~ ]  ;
+}
+:AppearanceActress IRI {
+	rdf:type [ :Appearance ] ;
+	:role xsd:string  ;
+	:film [ :~ ]  ;
+}

@@ -1,0 +1,33 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://example.com/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX schema: <http://schema.org/>
+PREFIX weso-s: <http://weso.es/shapes/>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+weso-s:Movie
+{
+   rdf:type  [schema:Movie]  ;                                 # 100.0 %
+   schema:actor  @weso-s:Person  {5};                          # 100.0 %
+   schema:name  rdf:langString  ;                              # 100.0 %
+   :screenwriter  xsd:string  +;                               # 100.0 %
+            # 50.0 % obj: xsd:string. Cardinality: {1}
+            # 50.0 % obj: xsd:string. Cardinality: {2}
+   schema:director  xsd:string  ;                              # 100.0 %
+   :cinematographer  xsd:string  ;                             # 100.0 %
+   schema:musicBy  xsd:string  ;                               # 100.0 %
+   :year  xsd:integer  ;                                       # 100.0 %
+   schema:countryOfOrigin  IRI                                 # 100.0 %
+}
+
+
+weso-s:Person
+{
+   rdf:type  [schema:Person]  ;                                # 100.0 %
+   :appear_on  @<BNode>  ;                                     # 100.0 %
+   schema:name  xsd:string                                     # 100.0 %
+}
+
+

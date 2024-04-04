@@ -1,0 +1,20 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://example.com/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX schema: <http://schema.org/>
+PREFIX weso-s: <http://weso.es/shapes/>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+weso-s:Movie
+{
+   rdf:type  [schema:Movie]  ;                                 # 100.0 %
+   schema:countryOfOrigin  IRI  ;                              # 100.0 %
+   schema:director  IRI  +;                                    # 100.0 %
+            # 90.2 % obj: IRI. Cardinality: {2}
+   :year  IRI  ;                                               # 100.0 %
+   schema:name  xsd:string                                     # 100.0 %
+}
+
+

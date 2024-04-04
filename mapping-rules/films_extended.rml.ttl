@@ -1,0 +1,273 @@
+@prefix :      <http://example.com/> .
+@prefix schema: <http://schema.org/> .
+@prefix rml:   <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix d2rq:  <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix dbr:   <http://dbpedia.org/resource/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix ql:    <http://semweb.mmlab.be/ns/ql#> .
+@prefix map:   <http://mapping.example.com/> .
+
+map:m_3  a                     rr:TriplesMap ;
+        rml:logicalSource      [ a                         rml:LogicalSource ;
+                                 rml:iterator              "//film/cast/actress" ;
+                                 rml:referenceFormulation  ql:XPath ;
+                                 rml:source                "https://shexml.herminiogarcia.com/files/films.xml"
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://example.com/{../../@id}" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :film
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "{role}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :role
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://example.com/Appearance" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+                                                  ]
+                               ] ;
+        rr:subjectMap          [ a            rr:SubjectMap ;
+                                 rr:template  "{role}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .
+
+map:m_2  a                     rr:TriplesMap ;
+        rml:logicalSource      [ a                         rml:LogicalSource ;
+                                 rml:iterator              "//film/cast/actor" ;
+                                 rml:referenceFormulation  ql:XPath ;
+                                 rml:source                "https://shexml.herminiogarcia.com/files/films.xml"
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a                    rr:ObjectMap ;
+                                                    rr:parentTriplesMap  map:m_1 ;
+                                                    rr:joinCondition [
+                                                      rr:child "role" ;
+                                                      rr:parent "role" ;
+                                                    ] ;
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :appear_on
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "{name}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:name
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://schema.org/Person" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+                                                  ]
+                               ] ;
+        rr:subjectMap          [ a            rr:SubjectMap ;
+                                 rr:template  "http://example.com/{name}"
+                               ] .
+
+map:m_1  a                     rr:TriplesMap ;
+        rml:logicalSource      [ a                         rml:LogicalSource ;
+                                 rml:iterator              "//film/cast/actor" ;
+                                 rml:referenceFormulation  ql:XPath ;
+                                 rml:source                "https://shexml.herminiogarcia.com/files/films.xml"
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://example.com/{../../@id}" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :film
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "{role}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :role
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://example.com/Appearance" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+                                                  ]
+                               ] ;
+        rr:subjectMap          [ a            rr:SubjectMap ;
+                                 rr:template  "{role}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .
+
+map:m_5  a                     rr:TriplesMap ;
+        rml:logicalSource      [ a                         rml:LogicalSource ;
+                                 rml:iterator              "//film" ;
+                                 rml:referenceFormulation  ql:XPath ;
+                                 rml:source                "https://shexml.herminiogarcia.com/files/films.xml"
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:language  "en" ;
+                                                    rr:template  "{name}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:name
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "{crew/music}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:musicBy
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://schema.org/Movie" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "{crew/photography}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :cinematographer
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a                    rr:ObjectMap ;
+                                                    rr:parentTriplesMap  map:m_2 ;
+                                                    rr:joinCondition [
+                                                      rr:child "@id" ;
+                                                      rr:parent "../../@id" ;
+                                                    ] ;
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:actor
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://dbpedia.org/resource/{country}" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:countryOfOrigin
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:datatype  xsd:integer ;
+                                                    rr:template  "{year}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :year
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "{crew//screenwritter}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :screenwriter
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a                    rr:ObjectMap ;
+                                                    rr:parentTriplesMap  map:m_4 ;
+                                                    rr:joinCondition [
+                                                      rr:child "@id" ;
+                                                      rr:parent "../../@id" ;
+                                                    ] ;
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:actor
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "{crew/directors/director}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:director
+                                                  ]
+                               ] ;
+        rr:subjectMap          [ a            rr:SubjectMap ;
+                                 rr:template  "http://example.com/{@id}"
+                               ] .
+
+map:m_4  a                     rr:TriplesMap ;
+        rml:logicalSource      [ a                         rml:LogicalSource ;
+                                 rml:iterator              "//film/cast/actress" ;
+                                 rml:referenceFormulation  ql:XPath ;
+                                 rml:source                "https://shexml.herminiogarcia.com/files/films.xml"
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a                    rr:ObjectMap ;
+                                                    rr:parentTriplesMap  map:m_3 ;
+                                                    rr:joinCondition [
+                                                      rr:child "role" ;
+                                                      rr:parent "role" ;
+                                                    ] ;
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  :appear_on
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "{name}" ;
+                                                    rr:termType  rr:Literal
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  schema:name
+                                                  ]
+                               ] ;
+        rr:predicateObjectMap  [ a                rr:PredicateObjectMap ;
+                                 rr:objectMap     [ a            rr:ObjectMap ;
+                                                    rr:template  "http://schema.org/Person" ;
+                                                    rr:termType  rr:IRI
+                                                  ] ;
+                                 rr:predicateMap  [ a            rr:predicateMap ;
+                                                    rr:constant  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+                                                  ]
+                               ] ;
+        rr:subjectMap          [ a            rr:SubjectMap ;
+                                 rr:template  "http://example.com/{name}"
+                               ] .
