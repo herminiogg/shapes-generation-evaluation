@@ -1,0 +1,4 @@
+[submodule "RML2SHACL"]
+	path = RML2SHACL
+	url = https://github.com/herminiogg/RML2SHACL.git
+	branch = shapes-experiment

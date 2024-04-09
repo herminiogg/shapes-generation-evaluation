@@ -8,35 +8,35 @@
     sh:nodeKind sh:IRI ;
     sh:pattern "http://example.com/.*" ;
     sh:property [ sh:nodeKind sh:Literal ;
+            sh:path schema:director ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path :cinematographer ],
+        [ sh:nodeKind sh:Literal ;
             sh:path :screenwriter ],
-        [ sh:node <http://mapping.example.com/m_4/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path schema:actor ],
-        [ sh:node <http://mapping.example.com/m_2/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path schema:actor ],
         [ sh:languageIn ( "en" ) ;
             sh:nodeKind sh:Literal ;
             sh:path schema:name ],
         [ sh:nodeKind sh:Literal ;
-            sh:path schema:director ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path :cinematographer ],
+            sh:path schema:musicBy ],
+        [ sh:node <http://mapping.example.com/m_2/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path schema:actor ],
         [ sh:nodeKind sh:IRI ;
             sh:path schema:countryOfOrigin ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path schema:musicBy ],
         [ sh:datatype xsd:integer ;
             sh:nodeKind sh:Literal ;
-            sh:path :year ] .
+            sh:path :year ],
+        [ sh:node <http://mapping.example.com/m_4/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path schema:actor ] .
 
 <http://mapping.example.com/m_1/shape> a sh:NodeShape ;
     sh:nodeKind sh:BlankNode ;
     sh:pattern ".*" ;
-    sh:property [ sh:nodeKind sh:IRI ;
-            sh:path :film ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path :role ] .
+    sh:property [ sh:nodeKind sh:Literal ;
+            sh:path :role ],
+        [ sh:nodeKind sh:IRI ;
+            sh:path :film ] .
 
 <http://mapping.example.com/m_2/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
@@ -50,17 +50,17 @@
 <http://mapping.example.com/m_3/shape> a sh:NodeShape ;
     sh:nodeKind sh:BlankNode ;
     sh:pattern ".*" ;
-    sh:property [ sh:nodeKind sh:IRI ;
-            sh:path :film ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path :role ] .
+    sh:property [ sh:nodeKind sh:Literal ;
+            sh:path :role ],
+        [ sh:nodeKind sh:IRI ;
+            sh:path :film ] .
 
 <http://mapping.example.com/m_4/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://example.com/.*" ;
-    sh:property [ sh:node <http://mapping.example.com/m_3/shape> ;
+    sh:property [ sh:nodeKind sh:Literal ;
+            sh:path schema:name ],
+        [ sh:node <http://mapping.example.com/m_3/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path :appear_on ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path schema:name ] .
+            sh:path :appear_on ] .
 
