@@ -9,7 +9,7 @@ cd ..
 if [[ ! -e "bin" ]]; then
 	mkdir bin
 	cd bin/
-	curl -OL https://github.com/herminiogg/ShExML/releases/download/v0.5.1/ShExML-v0.5.1.jar
+	curl -OL https://github.com/herminiogg/ShExML/releases/download/v0.5.2/ShExML-v0.5.2.jar
 	pip install shexer
 	cd ..
 	cd RML2SHACL
@@ -21,10 +21,10 @@ if [[ ! -e "bin" ]]; then
 	cd ..
 fi
 
-java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_1000.shexml -o=data/films_1000_entries.ttl > /dev/null
-java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_10000.shexml -o=data/films_10000_entries.ttl > /dev/null
-java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_100000.shexml -o=data/films_100000_entries.ttl > /dev/null
-java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_1000000.shexml -o=data/films_1000000_entries.ttl > /dev/null
+java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_1000.shexml -o=data/films_1000_entries.ttl > /dev/null
+java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_10000.shexml -o=data/films_10000_entries.ttl > /dev/null
+java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_100000.shexml -o=data/films_100000_entries.ttl > /dev/null
+java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_1000000.shexml -o=data/films_1000000_entries.ttl > /dev/null
 
 if [[ ! -e "generated-shapes" ]]; then
 	mkdir generated-shapes
@@ -60,17 +60,17 @@ m "python RML2SHACL/main.py mapping-rules/films_JSON_10000.rml.ttl" "RML2SHACL" 
 m "python RML2SHACL/main.py mapping-rules/films_JSON_100000.rml.ttl" "RML2SHACL" "SHACL" "100000"
 m "python RML2SHACL/main.py mapping-rules/films_JSON_1000000.rml.ttl" "RML2SHACL" "SHACL" "1000000"
 
-m "java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_1000.shexml -s -o=generated-shapes/shexml-shex-1000.shex" "ShExML" "ShEx" "1000"
-m "java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_1000.shexml -sh -o=generated-shapes/shexml-shacl-1000.ttl" "ShExML" "SHACL" "1000"
+m "java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_1000.shexml -s -o=generated-shapes/shexml-shex-1000.shex" "ShExML" "ShEx" "1000"
+m "java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_1000.shexml -sh -o=generated-shapes/shexml-shacl-1000.ttl" "ShExML" "SHACL" "1000"
 
-m "java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_10000.shexml -s -o=generated-shapes/shexml-shex-10000.shex" "ShExML" "ShEx" "10000"
-m "java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_10000.shexml -sh -o=generated-shapes/shexml-shacl-10000.ttl" "ShExML" "SHACL" "10000"
+m "java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_10000.shexml -s -o=generated-shapes/shexml-shex-10000.shex" "ShExML" "ShEx" "10000"
+m "java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_10000.shexml -sh -o=generated-shapes/shexml-shacl-10000.ttl" "ShExML" "SHACL" "10000"
 
-m "java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_100000.shexml -s -o=generated-shapes/shexml-shex-100000.shex" "ShExML" "ShEx" "100000"
-m "java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_100000.shexml -sh -o=generated-shapes/shexml-shacl-100000.ttl" "ShExML" "SHACL" "100000"
+m "java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_100000.shexml -s -o=generated-shapes/shexml-shex-100000.shex" "ShExML" "ShEx" "100000"
+m "java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_100000.shexml -sh -o=generated-shapes/shexml-shacl-100000.ttl" "ShExML" "SHACL" "100000"
 
-m "java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_1000000.shexml -s -o=generated-shapes/shexml-shex-1000000.shex" "ShExML" "ShEx" "1000000"
-m "java $JVM_ARGS -jar bin/ShExML-v0.5.1.jar -m=mapping-rules/films_JSON_1000000.shexml -sh -o=generated-shapes/shexml-shacl-1000000.ttl" "ShExML" "SHACL" "1000000"
+m "java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_1000000.shexml -s -o=generated-shapes/shexml-shex-1000000.shex" "ShExML" "ShEx" "1000000"
+m "java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_1000000.shexml -sh -o=generated-shapes/shexml-shacl-1000000.ttl" "ShExML" "SHACL" "1000000"
 
 m "java $JVM_ARGS -jar astrea/target/astrea-wrapper-1.0-SNAPSHOT.jar ontology/schemaorg-small.owl generated-shapes/astrea-shacl-1000.ttl" "astrea" "SHACL" "1000"
 m "java $JVM_ARGS -jar astrea/target/astrea-wrapper-1.0-SNAPSHOT.jar ontology/schemaorg-small.owl generated-shapes/astrea-shacl-10000.ttl" "astrea" "SHACL" "10000"

@@ -6,6 +6,7 @@
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 
 :AppearanceActor  a     sh:NodeShape ;
+        sh:nodeKind     sh:BlankNode ;
         sh:property     [ sh:maxCount  1 ;
                           sh:minCount  1 ;
                           sh:nodeKind  sh:IRI ;
@@ -19,9 +20,10 @@
         sh:property     [ sh:in    ( :Appearance ) ;
                           sh:path  rdf:type
                         ] ;
-        sh:targetClass  :AppearanceActor .
+        sh:targetClass  :Appearance .
 
 :AppearanceActress  a   sh:NodeShape ;
+        sh:nodeKind     sh:BlankNode ;
         sh:property     [ sh:maxCount  1 ;
                           sh:minCount  1 ;
                           sh:nodeKind  sh:IRI ;
@@ -35,16 +37,17 @@
         sh:property     [ sh:in    ( :Appearance ) ;
                           sh:path  rdf:type
                         ] ;
-        sh:targetClass  :AppearanceActress .
+        sh:targetClass  :Appearance .
 
 :Films  a               sh:NodeShape ;
+        sh:nodeKind     sh:IRI ;
         sh:property     [ sh:datatype  xsd:string ;
                           sh:maxCount  1 ;
                           sh:minCount  1 ;
                           sh:path      schema:director
                         ] ;
-        sh:property     [ sh:in    ( "@en" ) ;
-                          sh:path  schema:name
+        sh:property     [ sh:languageIn  ( "en" ) ;
+                          sh:path        schema:name
                         ] ;
         sh:property     [ sh:datatype  xsd:string ;
                           sh:maxCount  1 ;
@@ -56,9 +59,8 @@
                           sh:nodeKind  sh:IRI ;
                           sh:path      schema:countryOfOrigin
                         ] ;
-        sh:property     [ sh:class     :Actor ;
-                          sh:nodeKind  sh:IRI ;
-                          sh:path      schema:actor
+        sh:property     [ sh:node  :Actor ;
+                          sh:path  schema:actor
                         ] ;
         sh:property     [ sh:datatype  xsd:string ;
                           sh:minCount  1 ;
@@ -72,21 +74,20 @@
                           sh:minCount  1 ;
                           sh:path      :cinematographer
                         ] ;
-        sh:property     [ sh:class     :Actress ;
-                          sh:nodeKind  sh:IRI ;
-                          sh:path      schema:actor
+        sh:property     [ sh:node  :Actress ;
+                          sh:path  schema:actor
                         ] ;
         sh:property     [ sh:datatype  xsd:integer ;
                           sh:maxCount  1 ;
                           sh:minCount  1 ;
                           sh:path      :year
                         ] ;
-        sh:targetClass  :Films .
+        sh:targetClass  schema:Movie .
 
 :Actor  a               sh:NodeShape ;
-        sh:property     [ sh:class     :AppearanceActor ;
-                          sh:nodeKind  sh:IRI ;
-                          sh:path      :appear_on
+        sh:nodeKind     sh:IRI ;
+        sh:property     [ sh:node  :AppearanceActor ;
+                          sh:path  :appear_on
                         ] ;
         sh:property     [ sh:datatype  xsd:string ;
                           sh:maxCount  1 ;
@@ -96,12 +97,12 @@
         sh:property     [ sh:in    ( schema:Person ) ;
                           sh:path  rdf:type
                         ] ;
-        sh:targetClass  :Actor .
+        sh:targetClass  schema:Person .
 
 :Actress  a             sh:NodeShape ;
-        sh:property     [ sh:class     :AppearanceActress ;
-                          sh:nodeKind  sh:IRI ;
-                          sh:path      :appear_on
+        sh:nodeKind     sh:IRI ;
+        sh:property     [ sh:node  :AppearanceActress ;
+                          sh:path  :appear_on
                         ] ;
         sh:property     [ sh:datatype  xsd:string ;
                           sh:maxCount  1 ;
@@ -111,4 +112,4 @@
         sh:property     [ sh:in    ( schema:Person ) ;
                           sh:path  rdf:type
                         ] ;
-        sh:targetClass  :Actress .
+        sh:targetClass  schema:Person .
