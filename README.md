@@ -16,9 +16,9 @@ Each folder contains the following contents:
 * generated-shapes: all the generated shapes (in ShEx and SHACL) by the evaluated tools are stored in this folder.
 
 ## Used versions
-|  Library  | Version |
-|-----------|---------|
-| Astrea    | 1.2.1   |
-| RML2SHACL | 1.0.0   |
-| sheXer    | 2.2.2   |
-| ShExML    | 0.5.1   |
+|  Library  | Version          |
+|-----------|------------------|
+| Astrea    | 1.2.1-modified   |
+| RML2SHACL | 1.0.0-modified   |
+| sheXer    | 2.2.2            |
+| ShExML    | 0.5.1            |

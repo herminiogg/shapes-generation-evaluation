@@ -14,7 +14,7 @@ if [[ ! -e "bin" ]]; then
 	cd ..
 	cd RML2SHACL
 	pip install -r requirements.txt
-	cd ../astrea/astrea-project-modified
+	cd ../astrea/astrea
 	sh mvn-install.sh
 	cd ..
 	mvn clean package

@@ -2,3 +2,7 @@
 	path = RML2SHACL
 	url = https://github.com/herminiogg/RML2SHACL.git
 	branch = shapes-experiment
+[submodule "astrea/astrea"]
+	path = astrea/astrea
+	url = https://github.com/herminiogg/astrea.git
+	branch = shapes-experiment
