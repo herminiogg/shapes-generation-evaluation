@@ -1,0 +1,166 @@
+---
+title: "Performance on incremental size input for Shapes generation"
+author: "Herminio García-González"
+date: "2024-04-12"
+output: 
+  md_document:
+    variant: markdown_github
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(summarytools)
+library(FSA)
+library(ggplot2)
+library(rstatix)
+library(rmarkdown)
+library(ARTool)
+library(emmeans)
+library(car)
+library(ggpubr)
+```
+
+# Set up
+```{r}
+dataset <- read.csv("C:/Users/Herminio/Git/shapes-generation-evaluation/statistics/resultEvaluationIncrementalFilms.csv", sep=';')[, 2:5]
+datasetShEx <- dataset[(dataset$ShapesLanguage == "ShEx"), ]
+datasetSHACL <- dataset[(dataset$ShapesLanguage == "SHACL"), ]
+```
+
+#Descriptive statistics for SHACL generation
+```{r}
+stby(datasetSHACL, list(datasetSHACL$Tool, datasetSHACL$Size), descr, round.digits=5, stats=c("mean", "med", "sd", "min", "max"))
+```
+
+#Descriptive statistics for ShEx generation
+```{r}
+stby(datasetShEx, list(datasetShEx$Tool, datasetShEx$Size), descr, round.digits=5, stats=c("mean", "med", "sd", "min", "max"))
+```
+
+# Testing normality for SHACL
+```{r}
+by(datasetSHACL$ElapseTime_ms, list(datasetSHACL$Tool, datasetSHACL$Size), shapiro.test)
+```
+
+# Testing normality for ShEx
+```{r}
+by(datasetShEx$ElapseTime_ms, list(datasetShEx$Tool, datasetShEx$Size), shapiro.test)
+```
+
+
+# Running the ART tool including post hoc tests and effect size for SHACL
+```{r}
+datasetSHACL$Size <- factor(datasetSHACL$Size)
+datasetSHACL$Tool <- factor(datasetSHACL$Tool)
+
+model = art(ElapseTime_ms ~ Tool + (1 | Size), data=datasetSHACL)
+marginal = art.con(model, "Tool", adjust="tukey")
+
+Result = anova(model)
+Result$part.eta.sq = with(Result, `F` * `Df` / (`F` * `Df` + `Df.res`))
+Result
+marginal
+
+lm = artlm(model, "Tool")
+contrasts = summary(pairs(emmeans(lm, ~ Tool)))
+
+contrasts$d = contrasts$estimate / sigmaHat(lm)
+contrasts
+```
+# Comparing ShExML and sheXer by Elapsed Time and Size using the ART tool on incremental SHACL generation
+```{r}
+datasetSHACL$Size <- factor(datasetSHACL$Size)
+datasetSHACL$Tool <- factor(datasetSHACL$Tool)
+
+model = art(ElapseTime_ms ~ Tool + Size + Tool:Size, data=datasetSHACL[(datasetSHACL$Tool == "ShExML" | datasetSHACL$Tool == "sheXer"), ])
+marginal = art.con(model, "Tool:Size", adjust="tukey")
+
+Result = anova(model)
+Result$part.eta.sq = with(Result, `Sum Sq`/(`Sum Sq` + `Sum Sq.res`))
+Result
+
+lm = artlm(model, "Tool:Size")
+contrasts = summary(pairs(emmeans(lm, ~ Tool:Size)))
+
+contrasts$d = contrasts$estimate / sigmaHat(lm)
+contrasts
+```
+
+# Running the ART tool including post hoc tests and effect size for ShEx
+```{r}
+datasetShEx$Size <- factor(datasetShEx$Size)
+datasetShEx$Tool <- factor(datasetShEx$Tool)
+
+model = art(ElapseTime_ms ~ Tool + (1 | Size), data=datasetShEx)
+marginal = art.con(model, "Tool", adjust="tukey")
+
+Result = anova(model)
+Result$part.eta.sq = with(Result, `F` * `Df` / (`F` * `Df` + `Df.res`))
+Result
+marginal
+
+lm = artlm(model, "Tool")
+contrasts = summary(pairs(emmeans(lm, ~ Tool)))
+
+contrasts$d = contrasts$estimate / sigmaHat(lm)
+contrasts
+```
+# Comparing ShExML and sheXer by Elapsed Time and Size using the ART tool on incremental ShEx generation
+```{r}
+datasetShEx$Size <- factor(datasetShEx$Size)
+datasetShEx$Tool <- factor(datasetShEx$Tool)
+
+model = art(ElapseTime_ms ~ Tool + Size + Tool:Size, data=datasetShEx)
+marginal = art.con(model, "Tool:Size", adjust="tukey")
+
+Result = anova(model)
+Result$part.eta.sq = with(Result, `Sum Sq`/(`Sum Sq` + `Sum Sq.res`))
+Result
+
+lm = artlm(model, "Tool:Size")
+contrasts = summary(pairs(emmeans(lm, ~ Tool:Size)))
+
+contrasts$d = contrasts$estimate / sigmaHat(lm)
+contrasts
+```
+# Setting up the logarithmic scale
+```{r}
+datasetSHACLLog <- datasetSHACL
+datasetSHACLLog$ElapseTime_ms <- log(datasetSHACLLog$ElapseTime_ms)
+
+datasetShExLog <- datasetShEx
+datasetShExLog$ElapseTime_ms <- log(datasetShExLog$ElapseTime_ms)
+```
+
+# Comparing liner scale on SHACL
+```{r}
+ggline(datasetSHACL, x = "Size",
+      y = "ElapseTime_ms",
+      color = "Tool",
+      add = "mean_sd")
+```
+# Comparing logarithmic scale on SHACL
+```{r}
+ggline(datasetSHACLLog, x = "Size",
+      y = "ElapseTime_ms",
+      ylab = "Elapsed Time (log(ms))",
+      color = "Tool",
+      add = "mean_sd")
+```
+
+# Comparing linear scale on ShEx
+```{r}
+ggline(datasetShEx, x = "Size",
+      y = "ElapseTime_ms",
+      color = "Tool",
+      add = "mean_sd")
+```
+# Comparing logarithmic scale on ShEx
+```{r}
+ggline(datasetShExLog, x = "Size",
+      y = "ElapseTime_ms",
+      ylab = "Elapsed Time (log(ms))",
+      color = "Tool",
+      add = "mean_sd")
+``````

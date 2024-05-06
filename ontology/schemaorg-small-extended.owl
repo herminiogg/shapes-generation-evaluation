@@ -1,37 +1,18 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="https://schema.org/"
-     xml:base="https://schema.org/"
+<rdf:RDF
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:schema="https://schema.org/"
+     xmlns:schema="http://schema.org/"
+     xmlns:ex="http://example.com/"
      xmlns:dcterms="http://purl.org/dc/terms/">
-    <owl:Ontology rdf:about="https://schema.org/">
+    <owl:Ontology rdf:about="http://schema.org/">
         <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-02-12</dcterms:modified>
         <rdfs:label>Schema.org Vocabulary</rdfs:label>
         <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">26.0</owl:versionInfo>
     </owl:Ontology>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Annotation properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://purl.org/dc/terms/modified -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/modified"/>
-    
-
 
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -47,8 +28,7 @@
     <!-- http://example.com/appear_on -->
 
     <owl:ObjectProperty rdf:about="http://example.com/appear_on">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
-        <rdfs:domain rdf:resource="https://schema.org/Person"/>
+        <rdfs:domain rdf:resource="http://schema.org/Person"/>
         <rdfs:range rdf:resource="http://example.com/Appearance"/>
     </owl:ObjectProperty>
     
@@ -58,7 +38,7 @@
 
     <owl:ObjectProperty rdf:about="http://example.com/film">
         <rdfs:domain rdf:resource="http://example.com/Appearance"/>
-        <rdfs:range rdf:resource="https://schema.org/Movie"/>
+        <rdfs:range rdf:resource="http://schema.org/Movie"/>
     </owl:ObjectProperty>
     
 
@@ -66,8 +46,17 @@
     <!-- http://schema.org/actor -->
 
     <owl:ObjectProperty rdf:about="http://schema.org/actor">
-        <rdfs:domain rdf:resource="https://schema.org/Movie"/>
-        <rdfs:range rdf:resource="https://schema.org/Person"/>
+        <rdfs:domain rdf:resource="http://schema.org/Movie"/>
+        <rdfs:range rdf:resource="http://schema.org/Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://schema.org/countryOfOrigin -->
+
+    <owl:ObjectProperty rdf:about="http://schema.org/countryOfOrigin">
+        <rdfs:domain rdf:resource="http://schema.org/Movie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
     </owl:ObjectProperty>
     
 
@@ -86,8 +75,7 @@
     <!-- http://example.com/cinematographer -->
 
     <owl:DatatypeProperty rdf:about="http://example.com/cinematographer">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="https://schema.org/Movie"/>
+        <rdfs:domain rdf:resource="http://schema.org/Movie"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -105,8 +93,7 @@
     <!-- http://example.com/screenwriter -->
 
     <owl:DatatypeProperty rdf:about="http://example.com/screenwriter">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="https://schema.org/Movie"/>
+        <rdfs:domain rdf:resource="http://schema.org/Movie"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -115,8 +102,17 @@
     <!-- http://example.com/year -->
 
     <owl:DatatypeProperty rdf:about="http://example.com/year">
-        <rdfs:domain rdf:resource="https://schema.org/Movie"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+        <rdfs:domain rdf:resource="http://schema.org/Movie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://schema.org/director -->
+
+    <owl:DatatypeProperty rdf:about="http://schema.org/director">
+        <rdfs:domain rdf:resource="http://schema.org/Movie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
 
@@ -124,36 +120,17 @@
     <!-- http://schema.org/musicBy -->
 
     <owl:DatatypeProperty rdf:about="http://schema.org/musicBy">
-        <rdfs:domain rdf:resource="https://schema.org/Movie"/>
+        <rdfs:domain rdf:resource="http://schema.org/Movie"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
 
 
-    <!-- https://schema.org/countryOfOrigin -->
+    <!-- http://schema.org/name -->
 
-    <owl:DatatypeProperty rdf:about="https://schema.org/countryOfOrigin">
-        <rdfs:domain rdf:resource="https://schema.org/Movie"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- https://schema.org/director -->
-
-    <owl:DatatypeProperty rdf:about="https://schema.org/director">
-        <rdfs:domain rdf:resource="https://schema.org/Movie"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- https://schema.org/name -->
-
-    <owl:DatatypeProperty rdf:about="https://schema.org/name">
-        <rdfs:domain rdf:resource="https://schema.org/Movie"/>
-        <rdfs:domain rdf:resource="https://schema.org/Person"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:DatatypeProperty rdf:about="http://schema.org/name">
+        <rdfs:domain rdf:resource="http://schema.org/Movie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"/>
     </owl:DatatypeProperty>
     
 
@@ -175,18 +152,37 @@
     
 
 
-    <!-- https://schema.org/Movie -->
+    <!-- http://schema.org/Movie -->
 
-    <owl:Class rdf:about="https://schema.org/Movie"/>
+    <owl:Class rdf:about="http://schema.org/Movie">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://example.com/screenwriter" />
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://schema.org/actor" />
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
     
 
 
-    <!-- https://schema.org/Person -->
+    <!-- http://schema.org/Person -->
 
-    <owl:Class rdf:about="https://schema.org/Person"/>
+    <owl:Class rdf:about="http://schema.org/Person">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://example.com/appear_on" />
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
 </rdf:RDF>
 
 
 
 <!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
-
