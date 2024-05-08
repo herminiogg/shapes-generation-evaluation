@@ -22,6 +22,7 @@ Each folder contains the following contents:
 | RML2SHACL | 1.0.0-modified   |
 | sheXer    | 2.2.2            |
 | ShExML    | 0.5.2            |
+| SCOOP     | 1.0.0            |
 
 ## Comparison of restrictions coverage
 
@@ -33,6 +34,9 @@ Each folder contains the following contents:
 | RML2SHACL | generatedShapes/films_extended.rml.ttl-ouput-shape.ttl   |
 | sheXer    | generatedShapes/films_extended.ttl-shexer-shacl.ttl      |
 | ShExML    | generatedShapes/shexml-shacl-films-extended.ttl          |
+| SCOOP All RML+OWL | generatedShapes/scoop-shacl-extended-all-RML+OWL.ttl |
+| SCOOP All RML+XSD | generatedShapes/scoop-shacl-extended-all-RML+XSD.ttl |
+| SCOOP PriorityR RML+OWL+XSD | generatedShapes/scoop-shacl-extended-priorityR-RML+OWL+XSD.ttl |
 
 #### Validation results against data/films_extended.ttl
 
