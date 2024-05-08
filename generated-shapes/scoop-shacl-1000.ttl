@@ -1,0 +1,49 @@
+@prefix ns1: <https://w3id.org/def/astrea#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://astrea.linkeddata.es/report> a ns1:ShapeReport ;
+    ns1:contains <https://astrea.linkeddata.es/shapes#0c9c7e5d2b8bc969402273a9d46220e4>,
+        <https://astrea.linkeddata.es/shapes#0d46dd1c97d404f5ed355595777fb7bb>,
+        <https://astrea.linkeddata.es/shapes#3d2e77dc27c8a649fc58ebe0ec7a860b>,
+        <https://astrea.linkeddata.es/shapes#cd5b2acbdc83d18ff707cf3714068f7d>,
+        <https://astrea.linkeddata.es/shapes#f32f23dedde408324846d262d6aae4fa> ;
+    ns1:generatedShapesFrom <https://astrea.linkeddata.es/report/0620946147> .
+
+<https://astrea.linkeddata.es/report/0620946147> a ns1:ReportEntry ;
+    ns1:message "Shapes generated with no errors" ;
+    ns1:statusCode "200"^^xsd:int .
+
+<https://astrea.linkeddata.es/shapes#3d2e77dc27c8a649fc58ebe0ec7a860b> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:property <https://astrea.linkeddata.es/shapes#0c9c7e5d2b8bc969402273a9d46220e4>,
+        <https://astrea.linkeddata.es/shapes#0d46dd1c97d404f5ed355595777fb7bb>,
+        <https://astrea.linkeddata.es/shapes#cd5b2acbdc83d18ff707cf3714068f7d>,
+        <https://astrea.linkeddata.es/shapes#f32f23dedde408324846d262d6aae4fa> ;
+    sh:targetClass schema:Movie .
+
+<https://astrea.linkeddata.es/shapes#0c9c7e5d2b8bc969402273a9d46220e4> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:nodeKind sh:Literal ;
+    sh:path schema:name ;
+    sh:pattern ".*" .
+
+<https://astrea.linkeddata.es/shapes#0d46dd1c97d404f5ed355595777fb7bb> a sh:PropertyShape ;
+    sh:datatype xsd:anyURI ;
+    sh:nodeKind sh:Literal ;
+    sh:path schema:countryOfOrigin ;
+    sh:pattern "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?" .
+
+<https://astrea.linkeddata.es/shapes#cd5b2acbdc83d18ff707cf3714068f7d> a sh:PropertyShape ;
+    sh:datatype xsd:anyURI ;
+    sh:nodeKind sh:Literal ;
+    sh:path <http://example.com/year> ;
+    sh:pattern "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?" .
+
+<https://astrea.linkeddata.es/shapes#f32f23dedde408324846d262d6aae4fa> a sh:PropertyShape ;
+    sh:datatype xsd:anyURI ;
+    sh:nodeKind sh:Literal ;
+    sh:path schema:director ;
+    sh:pattern "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?" .
+

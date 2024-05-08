@@ -1,0 +1,281 @@
+@prefix ex: <http://example.com/> .
+@prefix ns1: <https://w3id.org/def/astrea#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://astrea.linkeddata.es/report> a ns1:ShapeReport ;
+    ns1:contains <https://astrea.linkeddata.es/shapes#17790ee25a1fe29855c6df308eb1f5ed>,
+        <https://astrea.linkeddata.es/shapes#1d4b5b81f49b163bfd97c980aa5eaea6>,
+        <https://astrea.linkeddata.es/shapes#2e6ccbbcbbf858d2c01a54d09bedb96d>,
+        <https://astrea.linkeddata.es/shapes#390a9231d70f5efa8d100d989299b599>,
+        <https://astrea.linkeddata.es/shapes#399c262d15f2835c844130c229fc6e9c>,
+        <https://astrea.linkeddata.es/shapes#446fae7354520d2b7f64dca3474e20d6>,
+        <https://astrea.linkeddata.es/shapes#4b91d424b5086419ae84ecaa893da9d8>,
+        <https://astrea.linkeddata.es/shapes#67c8c4793da3135d710e858bde63544c>,
+        <https://astrea.linkeddata.es/shapes#8846fbb461a46b7081e001468ef7cf00>,
+        <https://astrea.linkeddata.es/shapes#937877094a119a2e4c0d3b6c5ff1c4d1>,
+        <https://astrea.linkeddata.es/shapes#969422003ce4d769ac66db42ccf339fc>,
+        <https://astrea.linkeddata.es/shapes#a3e6b25c7475d32f99db4807e273705a>,
+        <https://astrea.linkeddata.es/shapes#a4258a88c90bd99f4d4399d86accbe63>,
+        <https://astrea.linkeddata.es/shapes#c3156706263a69e2e8dc3bad526f383e>,
+        <https://astrea.linkeddata.es/shapes#cb8151ac4b8d524cbe4084ddea07d990>,
+        <https://astrea.linkeddata.es/shapes#cd5b2acbdc83d18ff707cf3714068f7d>,
+        <https://astrea.linkeddata.es/shapes#fc0d21c7fe9b204c74def05369881b16> ;
+    ns1:generatedShapesFrom <https://astrea.linkeddata.es/report/0620946147> .
+
+<http://example.com/NodeShape/films> a sh:NodeShape ;
+    sh:name "films" ;
+    sh:node <http://example.com/NodeShape/None>,
+        <http://example.com/NodeShape/films/film> ;
+    sh:nodeKind sh:IRI ;
+    sh:targetClass ex:films .
+
+<http://example.com/NodeShape/films/film> a sh:NodeShape ;
+    sh:name "film" ;
+    sh:node <http://example.com/NodeShape/None>,
+        <http://example.com/NodeShape/films/film/cast>,
+        <http://example.com/NodeShape/films/film/crew> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/@id>,
+        <http://example.com/PropertyShape/films/film/country>,
+        <http://example.com/PropertyShape/films/film/name>,
+        <http://example.com/PropertyShape/films/film/year> ;
+    sh:targetClass ex:film .
+
+<http://example.com/NodeShape/films/film/cast> a sh:NodeShape ;
+    sh:name "cast" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:targetClass ex:cast ;
+    sh:xone ( <http://example.com/NodeShape/films/film/cast/actor> <http://example.com/NodeShape/films/film/cast/actress> ) .
+
+<http://example.com/NodeShape/films/film/cast/actor> a sh:NodeShape ;
+    sh:name "actor" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/cast/actor/name>,
+        <http://example.com/PropertyShape/films/film/cast/actor/role> ;
+    sh:targetClass ex:actor .
+
+<http://example.com/NodeShape/films/film/cast/actress> a sh:NodeShape ;
+    sh:name "actress" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/cast/actress/name>,
+        <http://example.com/PropertyShape/films/film/cast/actress/role> ;
+    sh:targetClass ex:actress .
+
+<http://example.com/NodeShape/films/film/crew> a sh:NodeShape ;
+    sh:name "crew" ;
+    sh:node <http://example.com/NodeShape/None>,
+        <http://example.com/NodeShape/films/film/crew/directors>,
+        <http://example.com/NodeShape/films/film/crew/screenplay> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/crew/music>,
+        <http://example.com/PropertyShape/films/film/crew/photography> ;
+    sh:targetClass ex:crew .
+
+<http://example.com/NodeShape/films/film/crew/directors> a sh:NodeShape ;
+    sh:name "directors" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/crew/directors/director> ;
+    sh:targetClass ex:directors .
+
+<http://example.com/NodeShape/films/film/crew/screenplay> a sh:NodeShape ;
+    sh:name "screenplay" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/crew/screenplay/screenwritter> ;
+    sh:targetClass ex:screenplay .
+
+<http://example.com/PropertyShape/films/film/@id> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:name "id" ;
+    sh:path ex:id .
+
+<http://example.com/PropertyShape/films/film/cast/actor/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path ex:name .
+
+<http://example.com/PropertyShape/films/film/cast/actor/role> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "role" ;
+    sh:path ex:role .
+
+<http://example.com/PropertyShape/films/film/cast/actress/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path ex:name .
+
+<http://example.com/PropertyShape/films/film/cast/actress/role> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "role" ;
+    sh:path ex:role .
+
+<http://example.com/PropertyShape/films/film/country> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "country" ;
+    sh:path ex:country .
+
+<http://example.com/PropertyShape/films/film/crew/directors/director> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "director" ;
+    sh:path ex:director .
+
+<http://example.com/PropertyShape/films/film/crew/music> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "music" ;
+    sh:path ex:music .
+
+<http://example.com/PropertyShape/films/film/crew/photography> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "photography" ;
+    sh:path ex:photography .
+
+<http://example.com/PropertyShape/films/film/crew/screenplay/screenwritter> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:name "screenwritter" ;
+    sh:path ex:screenwritter .
+
+<http://example.com/PropertyShape/films/film/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path ex:name .
+
+<http://example.com/PropertyShape/films/film/year> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "year" ;
+    sh:path ex:year .
+
+<https://astrea.linkeddata.es/report/0620946147> a ns1:ReportEntry ;
+    ns1:message "Shapes generated with no errors" ;
+    ns1:statusCode "200"^^xsd:int .
+
+<https://astrea.linkeddata.es/shapes#17790ee25a1fe29855c6df308eb1f5ed> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:property <https://astrea.linkeddata.es/shapes#8846fbb461a46b7081e001468ef7cf00>,
+        <https://astrea.linkeddata.es/shapes#c3156706263a69e2e8dc3bad526f383e> ;
+    sh:targetClass schema:Person .
+
+<https://astrea.linkeddata.es/shapes#390a9231d70f5efa8d100d989299b599> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:property <https://astrea.linkeddata.es/shapes#1d4b5b81f49b163bfd97c980aa5eaea6>,
+        <https://astrea.linkeddata.es/shapes#399c262d15f2835c844130c229fc6e9c>,
+        <https://astrea.linkeddata.es/shapes#4b91d424b5086419ae84ecaa893da9d8>,
+        <https://astrea.linkeddata.es/shapes#67c8c4793da3135d710e858bde63544c>,
+        <https://astrea.linkeddata.es/shapes#937877094a119a2e4c0d3b6c5ff1c4d1>,
+        <https://astrea.linkeddata.es/shapes#a3e6b25c7475d32f99db4807e273705a>,
+        <https://astrea.linkeddata.es/shapes#a4258a88c90bd99f4d4399d86accbe63>,
+        <https://astrea.linkeddata.es/shapes#cb8151ac4b8d524cbe4084ddea07d990>,
+        <https://astrea.linkeddata.es/shapes#cd5b2acbdc83d18ff707cf3714068f7d>,
+        <https://astrea.linkeddata.es/shapes#fc0d21c7fe9b204c74def05369881b16> ;
+    sh:targetClass schema:Movie .
+
+<https://astrea.linkeddata.es/shapes#969422003ce4d769ac66db42ccf339fc> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:property <https://astrea.linkeddata.es/shapes#2e6ccbbcbbf858d2c01a54d09bedb96d>,
+        <https://astrea.linkeddata.es/shapes#446fae7354520d2b7f64dca3474e20d6> ;
+    sh:targetClass ex:Appearance .
+
+<https://astrea.linkeddata.es/shapes#1d4b5b81f49b163bfd97c980aa5eaea6> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:nodeKind sh:Literal ;
+    sh:path schema:director ;
+    sh:pattern ".*" .
+
+<https://astrea.linkeddata.es/shapes#2e6ccbbcbbf858d2c01a54d09bedb96d> a sh:PropertyShape ;
+    sh:class schema:Movie ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:path ex:film .
+
+<https://astrea.linkeddata.es/shapes#399c262d15f2835c844130c229fc6e9c> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:nodeKind sh:Literal ;
+    sh:path schema:musicBy ;
+    sh:pattern ".*" .
+
+<https://astrea.linkeddata.es/shapes#446fae7354520d2b7f64dca3474e20d6> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:nodeKind sh:Literal ;
+    sh:path ex:role ;
+    sh:pattern ".*" .
+
+<https://astrea.linkeddata.es/shapes#4b91d424b5086419ae84ecaa893da9d8> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRIOrLiteral ;
+    sh:path ex:screenwriter .
+
+<https://astrea.linkeddata.es/shapes#67c8c4793da3135d710e858bde63544c> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:nodeKind sh:Literal ;
+    sh:path ex:screenwriter ;
+    sh:pattern ".*" .
+
+<https://astrea.linkeddata.es/shapes#8846fbb461a46b7081e001468ef7cf00> a sh:PropertyShape ;
+    sh:class ex:Appearance ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:path ex:appear_on .
+
+<https://astrea.linkeddata.es/shapes#937877094a119a2e4c0d3b6c5ff1c4d1> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:nodeKind sh:Literal ;
+    sh:path ex:cinematographer ;
+    sh:pattern ".*" .
+
+<https://astrea.linkeddata.es/shapes#a3e6b25c7475d32f99db4807e273705a> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRIOrLiteral ;
+    sh:path schema:actor .
+
+<https://astrea.linkeddata.es/shapes#a4258a88c90bd99f4d4399d86accbe63> a sh:PropertyShape ;
+    sh:class schema:Person ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:path schema:actor .
+
+<https://astrea.linkeddata.es/shapes#c3156706263a69e2e8dc3bad526f383e> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRIOrLiteral ;
+    sh:path ex:appear_on .
+
+<https://astrea.linkeddata.es/shapes#cb8151ac4b8d524cbe4084ddea07d990> a sh:PropertyShape ;
+    sh:class rdfs:Resource ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:path schema:countryOfOrigin .
+
+<https://astrea.linkeddata.es/shapes#cd5b2acbdc83d18ff707cf3714068f7d> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:nodeKind sh:Literal ;
+    sh:path ex:year ;
+    sh:pattern "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#fc0d21c7fe9b204c74def05369881b16> a sh:PropertyShape ;
+    sh:datatype rdf:langString ;
+    sh:nodeKind sh:Literal ;
+    sh:path schema:name .
+

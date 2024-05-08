@@ -6,3 +6,6 @@
 	path = astrea/astrea
 	url = https://github.com/herminiogg/astrea.git
 	branch = shapes-experiment
+[submodule "SCOOP"]
+	path = SCOOP
+	url = https://github.com/dtai-kg/SCOOP.git

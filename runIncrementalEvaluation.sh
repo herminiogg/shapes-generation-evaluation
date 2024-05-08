@@ -19,6 +19,9 @@ if [[ ! -e "bin" ]]; then
 	cd ..
 	mvn clean package
 	cd ..
+	cd SCOOP
+	pip install -r requirements.txt
+	cd ..
 fi
 
 java $JVM_ARGS -jar bin/ShExML-v0.5.2.jar -m=mapping-rules/films_JSON_1000.shexml -o=data/films_1000_entries.ttl > /dev/null
@@ -41,7 +44,7 @@ function m() {
 	done
 }
 
-echo "Hit;Tool;ShapesLanguage;Size;ElapseTime_ms"
+echo "Hit;Tool;ShapesLanguage;Size;ElapsedTime_ms"
 
 m "python shexer/main.py data/films_1000_entries.ttl" "sheXer" "ShEx" "1000"
 m "python shexer/mainSHACL.py data/films_1000_entries.ttl" "sheXer" "SHACL" "1000"
@@ -76,3 +79,10 @@ m "java $JVM_ARGS -jar astrea/target/astrea-wrapper-1.0-SNAPSHOT.jar ontology/sc
 m "java $JVM_ARGS -jar astrea/target/astrea-wrapper-1.0-SNAPSHOT.jar ontology/schemaorg-small.owl generated-shapes/astrea-shacl-10000.ttl" "astrea" "SHACL" "10000"
 m "java $JVM_ARGS -jar astrea/target/astrea-wrapper-1.0-SNAPSHOT.jar ontology/schemaorg-small.owl generated-shapes/astrea-shacl-100000.ttl" "astrea" "SHACL" "100000"
 m "java $JVM_ARGS -jar astrea/target/astrea-wrapper-1.0-SNAPSHOT.jar ontology/schemaorg-small.owl generated-shapes/astrea-shacl-1000000.ttl" "astrea" "SHACL" "1000000"
+
+cd SCOOP
+m "python main.py -m ../mapping-rules/films_JSON_1000.rml.ttl -o ../ontology/schemaorg-small.ttl -ot ../generated-shapes/scoop-shacl-1000.ttl" "SCOOP" "SHACL" "1000"
+m "python main.py -m ../mapping-rules/films_JSON_10000.rml.ttl -o ../ontology/schemaorg-small.ttl -ot ../generated-shapes/scoop-shacl-10000.ttl" "SCOOP" "SHACL" "10000"
+m "python main.py -m ../mapping-rules/films_JSON_100000.rml.ttl -o ../ontology/schemaorg-small.ttl -ot ../generated-shapes/scoop-shacl-100000.ttl" "SCOOP" "SHACL" "100000"
+m "python main.py -m ../mapping-rules/films_JSON_1000000.rml.ttl -o ../ontology/schemaorg-small.ttl -ot ../generated-shapes/scoop-shacl-1000000.ttl" "SCOOP" "SHACL" "1000000"
+cd ..

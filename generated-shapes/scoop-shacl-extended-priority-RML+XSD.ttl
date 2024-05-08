@@ -1,0 +1,152 @@
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/films> a sh:NodeShape ;
+    sh:name "films" ;
+    sh:node <http://example.com/NodeShape/None>,
+        <http://example.com/NodeShape/films/film> ;
+    sh:nodeKind sh:IRI ;
+    sh:targetClass ex:films .
+
+<http://example.com/NodeShape/films/film> a sh:NodeShape ;
+    sh:name "film" ;
+    sh:node <http://example.com/NodeShape/None>,
+        <http://example.com/NodeShape/films/film/cast>,
+        <http://example.com/NodeShape/films/film/crew> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/@id>,
+        <http://example.com/PropertyShape/films/film/country>,
+        <http://example.com/PropertyShape/films/film/name>,
+        <http://example.com/PropertyShape/films/film/year> ;
+    sh:targetClass ex:film .
+
+<http://example.com/NodeShape/films/film/cast> a sh:NodeShape ;
+    sh:name "cast" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:targetClass ex:cast ;
+    sh:xone ( <http://example.com/NodeShape/films/film/cast/actor> <http://example.com/NodeShape/films/film/cast/actress> ) .
+
+<http://example.com/NodeShape/films/film/cast/actor> a sh:NodeShape ;
+    sh:name "actor" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/cast/actor/name>,
+        <http://example.com/PropertyShape/films/film/cast/actor/role> ;
+    sh:targetClass ex:actor .
+
+<http://example.com/NodeShape/films/film/cast/actress> a sh:NodeShape ;
+    sh:name "actress" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/cast/actress/name>,
+        <http://example.com/PropertyShape/films/film/cast/actress/role> ;
+    sh:targetClass ex:actress .
+
+<http://example.com/NodeShape/films/film/crew> a sh:NodeShape ;
+    sh:name "crew" ;
+    sh:node <http://example.com/NodeShape/None>,
+        <http://example.com/NodeShape/films/film/crew/directors>,
+        <http://example.com/NodeShape/films/film/crew/screenplay> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/crew/music>,
+        <http://example.com/PropertyShape/films/film/crew/photography> ;
+    sh:targetClass ex:crew .
+
+<http://example.com/NodeShape/films/film/crew/directors> a sh:NodeShape ;
+    sh:name "directors" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/crew/directors/director> ;
+    sh:targetClass ex:directors .
+
+<http://example.com/NodeShape/films/film/crew/screenplay> a sh:NodeShape ;
+    sh:name "screenplay" ;
+    sh:node <http://example.com/NodeShape/None> ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/films/film/crew/screenplay/screenwritter> ;
+    sh:targetClass ex:screenplay .
+
+<http://example.com/PropertyShape/films/film/@id> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:name "id" ;
+    sh:path ex:id .
+
+<http://example.com/PropertyShape/films/film/cast/actor/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path ex:name .
+
+<http://example.com/PropertyShape/films/film/cast/actor/role> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "role" ;
+    sh:path ex:role .
+
+<http://example.com/PropertyShape/films/film/cast/actress/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path ex:name .
+
+<http://example.com/PropertyShape/films/film/cast/actress/role> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "role" ;
+    sh:path ex:role .
+
+<http://example.com/PropertyShape/films/film/country> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "country" ;
+    sh:path ex:country .
+
+<http://example.com/PropertyShape/films/film/crew/directors/director> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "director" ;
+    sh:path ex:director .
+
+<http://example.com/PropertyShape/films/film/crew/music> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "music" ;
+    sh:path ex:music .
+
+<http://example.com/PropertyShape/films/film/crew/photography> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "photography" ;
+    sh:path ex:photography .
+
+<http://example.com/PropertyShape/films/film/crew/screenplay/screenwritter> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:name "screenwritter" ;
+    sh:path ex:screenwritter .
+
+<http://example.com/PropertyShape/films/film/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path ex:name .
+
+<http://example.com/PropertyShape/films/film/year> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "year" ;
+    sh:path ex:year .
+
