@@ -7,21 +7,22 @@
 
 weso-s:Movie a sh:NodeShape ;
     sh:property [ a sh:PropertyShape ;
-            sh:nodeKind sh:IRI ;
-            sh:path schema:director ],
+            sh:in ( schema:Movie ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path rdf:type ],
         [ a sh:PropertyShape ;
             sh:dataType xsd:string ;
             sh:path schema:name ],
         [ a sh:PropertyShape ;
-            sh:nodeKind sh:IRI ;
-            sh:path default1:year ],
-        [ a sh:PropertyShape ;
+            sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:path schema:countryOfOrigin ],
         [ a sh:PropertyShape ;
-            sh:in ( schema:Movie ) ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:path rdf:type ] ;
+            sh:nodeKind sh:IRI ;
+            sh:path schema:director ],
+        [ a sh:PropertyShape ;
+            sh:nodeKind sh:IRI ;
+            sh:path default1:year ] ;
     sh:targetClass schema:Movie .
 

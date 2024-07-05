@@ -6,6 +6,7 @@
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 
 :Films  a               sh:NodeShape ;
+        sh:nodeKind     sh:IRI ;
         sh:property     [ sh:maxCount  2 ;
                           sh:minCount  2 ;
                           sh:nodeKind  sh:IRI ;
@@ -29,4 +30,4 @@
         sh:property     [ sh:in    ( schema:Movie ) ;
                           sh:path  rdf:type
                         ] ;
-        sh:targetClass  :Films .
+        sh:targetClass  schema:Movie .

@@ -5,12 +5,12 @@
 <http://mapping.example.com/m_1/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://example.com/.*" ;
-    sh:property [ sh:nodeKind sh:Literal ;
+    sh:property [ sh:nodeKind sh:IRI ;
+            sh:path schema:director ],
+        [ sh:nodeKind sh:Literal ;
             sh:path schema:name ],
-        [ sh:nodeKind sh:IRI ;
-            sh:path :year ],
         [ sh:nodeKind sh:IRI ;
             sh:path schema:countryOfOrigin ],
         [ sh:nodeKind sh:IRI ;
-            sh:path schema:director ] .
+            sh:path :year ] .
 

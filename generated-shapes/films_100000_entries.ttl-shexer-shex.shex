@@ -10,16 +10,15 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 weso-s:Movie
 {
    rdf:type  [schema:Movie]  ;                                 # 100.0 %
-   schema:director  IRI  *;
-            # 99.99900000000001 % obj: IRI. Cardinality: +
-            # 89.872 % obj: IRI. Cardinality: {2}
-            # 10.127 % obj: IRI. Cardinality: {1}
+   schema:countryOfOrigin  IRI  ?;
+            # 99.99900000000001 % obj: IRI. Cardinality: {1}
    :year  IRI  *;
             # 99.99900000000001 % obj: IRI. Cardinality: +
             # 99.998 % obj: IRI. Cardinality: {1}
-   schema:countryOfOrigin  IRI  *;
+   schema:director  IRI  *;
             # 99.998 % obj: IRI. Cardinality: +
-            # 99.997 % obj: IRI. Cardinality: {1}
+            # 89.998 % obj: IRI. Cardinality: {2}
+            # 10.0 % obj: IRI. Cardinality: {1}
    schema:name  xsd:string  *
             # 99.997 % obj: xsd:string. Cardinality: +
             # 99.995 % obj: xsd:string. Cardinality: {1}

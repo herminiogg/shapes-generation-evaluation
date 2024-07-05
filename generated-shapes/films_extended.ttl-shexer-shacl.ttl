@@ -7,48 +7,48 @@
 
 weso-s:Movie a sh:NodeShape ;
     sh:property [ a sh:PropertyShape ;
-            sh:dataType xsd:string ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:path schema:musicBy ],
-        [ a sh:PropertyShape ;
-            sh:dataType xsd:string ;
-            sh:minCount 1 ;
-            sh:path default1:screenwriter ],
+            sh:maxCount 5 ;
+            sh:minCount 5 ;
+            sh:nodeKind sh:IRI ;
+            sh:path schema:actor ],
         [ a sh:PropertyShape ;
             sh:dataType xsd:string ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:path default1:cinematographer ],
         [ a sh:PropertyShape ;
-            sh:in ( schema:Movie ) ;
+            sh:dataType xsd:string ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
-            sh:path rdf:type ],
+            sh:path schema:musicBy ],
         [ a sh:PropertyShape ;
             sh:dataType xsd:string ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:path schema:director ],
         [ a sh:PropertyShape ;
-            sh:maxCount 5 ;
-            sh:minCount 5 ;
-            sh:nodeKind sh:IRI ;
-            sh:path schema:actor ],
-        [ a sh:PropertyShape ;
             sh:dataType xsd:integer ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:path default1:year ],
+        [ a sh:PropertyShape ;
+            sh:dataType xsd:string ;
+            sh:minCount 1 ;
+            sh:path default1:screenwriter ],
+        [ a sh:PropertyShape ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path schema:countryOfOrigin ],
         [ a sh:PropertyShape ;
             sh:dataType rdf:langString ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:path schema:name ],
         [ a sh:PropertyShape ;
+            sh:in ( schema:Movie ) ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:path schema:countryOfOrigin ] ;
+            sh:path rdf:type ] ;
     sh:targetClass schema:Movie .
 

@@ -10,15 +10,15 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 weso-s:Movie
 {
    schema:actor  @weso-s:Person  {5};                          # 100.0 %
+   schema:musicBy  xsd:string  ;                               # 100.0 %
+   rdf:type  [schema:Movie]  ;                                 # 100.0 %
+   :year  xsd:integer  ;                                       # 100.0 %
+   schema:name  rdf:langString  ;                              # 100.0 %
+   :cinematographer  xsd:string  ;                             # 100.0 %
+   schema:countryOfOrigin  IRI  ;                              # 100.0 %
    :screenwriter  xsd:string  +;                               # 100.0 %
             # 50.0 % obj: xsd:string. Cardinality: {1}
             # 50.0 % obj: xsd:string. Cardinality: {2}
-   schema:name  rdf:langString  ;                              # 100.0 %
-   schema:musicBy  xsd:string  ;                               # 100.0 %
-   :year  xsd:integer  ;                                       # 100.0 %
-   rdf:type  [schema:Movie]  ;                                 # 100.0 %
-   :cinematographer  xsd:string  ;                             # 100.0 %
-   schema:countryOfOrigin  IRI  ;                              # 100.0 %
    schema:director  xsd:string                                 # 100.0 %
 }
 
@@ -26,8 +26,8 @@ weso-s:Movie
 weso-s:Person
 {
    rdf:type  [schema:Person]  ;                                # 100.0 %
-   :appear_on  @<BNode>  ;                                     # 100.0 %
-   schema:name  xsd:string                                     # 100.0 %
+   schema:name  xsd:string  ;                                  # 100.0 %
+   :appear_on  @<BNode>                                        # 100.0 %
 }
 
 

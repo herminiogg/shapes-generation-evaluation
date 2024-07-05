@@ -6,11 +6,11 @@
     sh:nodeKind sh:IRI ;
     sh:pattern "http://example.com/.*" ;
     sh:property [ sh:nodeKind sh:IRI ;
-            sh:path :year ],
+            sh:path schema:countryOfOrigin ],
         [ sh:nodeKind sh:IRI ;
-            sh:path schema:director ],
+            sh:path :year ],
         [ sh:nodeKind sh:Literal ;
             sh:path schema:name ],
         [ sh:nodeKind sh:IRI ;
-            sh:path schema:countryOfOrigin ] .
+            sh:path schema:director ] .
 

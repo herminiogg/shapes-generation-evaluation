@@ -1,11 +1,12 @@
 PREFIX : <http://example.com/>
 PREFIX dbr: <http://dbpedia.org/resource/>
 PREFIX schema: <http://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 :Films IRI {
 	rdf:type [ schema:Movie ] ;
 	schema:name xsd:string  ;
 	:year [ dbr:~ ]  ;
-	schema:countryOfOrigin [ dbr:~ ] + ;
-	schema:director [ dbr:~ ] {2,2} ;
+	schema:countryOfOrigin [ dbr:~ ]  ;
+	schema:director [ dbr:~ ] + ;
 }
