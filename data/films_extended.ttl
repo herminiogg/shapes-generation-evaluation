@@ -1,0 +1,94 @@
+@prefix :      <http://example.com/> .
+@prefix schema: <http://schema.org/> .
+@prefix dbr:   <http://dbpedia.org/resource/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+:2      a                       schema:Movie ;
+        :cinematographer        "Hoyte van Hoytema" ;
+        :screenwriter           "Jonathan Nolan" , "Christopher Nolan" ;
+        :year                   2014 ;
+        schema:actor            :Ellen_Burstyn , :Timothée_Chalamet , :Matthew_McConaughey , :Mackenzie_Foy , :John_Lithgow ;
+        schema:countryOfOrigin  dbr:USA ;
+        schema:director         "Christopher Nolan" ;
+        schema:musicBy          "Hans Zimmer" ;
+        schema:name             "Interstellar"@en .
+
+:Lee_Armstrong  a    schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :1 ;
+                       :role   "Grenadier"
+                     ] ;
+        schema:name  "Lee Armstrong" .
+
+:1      a                       schema:Movie ;
+        :cinematographer        "Hoyte van Hoytema" ;
+        :screenwriter           "Christopher Nolan" ;
+        :year                   2017 ;
+        schema:actor            :Damien_Bonnard , :James_Bloor , :Aneurin_Barnard , :Fionn_Whitehead , :Lee_Armstrong ;
+        schema:countryOfOrigin  dbr:USA ;
+        schema:director         "Christopher Nolan" ;
+        schema:musicBy          "Hans Zimmer" ;
+        schema:name             "Dunkirk"@en .
+
+:Damien_Bonnard  a   schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :1 ;
+                       :role   "French soldier"
+                     ] ;
+        schema:name  "Damien Bonnard" .
+
+:Aneurin_Barnard  a  schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :1 ;
+                       :role   "Gibson"
+                     ] ;
+        schema:name  "Aneurin Barnard" .
+
+:Fionn_Whitehead  a  schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :1 ;
+                       :role   "Tommy"
+                     ] ;
+        schema:name  "Fionn Whitehead" .
+
+:Matthew_McConaughey  a  schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :2 ;
+                       :role   "Cooper"
+                     ] ;
+        schema:name  "Matthew McConaughey" .
+
+:Ellen_Burstyn  a    schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :2 ;
+                       :role   "Murph (Older)"
+                     ] ;
+        schema:name  "Ellen Burstyn" .
+
+:Mackenzie_Foy  a    schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :2 ;
+                       :role   "Murph (10 Yrs.)"
+                     ] ;
+        schema:name  "Mackenzie Foy" .
+
+:John_Lithgow  a     schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :2 ;
+                       :role   "Donald"
+                     ] ;
+        schema:name  "John Lithgow" .
+
+:James_Bloor  a      schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :1 ;
+                       :role   "Irate Soldier"
+                     ] ;
+        schema:name  "James Bloor" .
+
+:Timothée_Chalamet  a  schema:Person ;
+        :appear_on   [ a       :Appearance ;
+                       :film   :2 ;
+                       :role   "Tom (15 Yrs.)"
+                     ] ;
+        schema:name  "Timothée Chalamet" .
