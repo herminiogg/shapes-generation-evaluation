@@ -56,7 +56,7 @@ Each folder contains the following contents:
 | Cardinality (sh:maxCount & sh:minCount) | ✅ | ❌ | ✅ (but it might fit too much) | ✅ | ✅ | ✅ | ✅ |
 | Datatypes (sh:datatype) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Differentation IRIs and Bnodes (sh:nodeKind) | ❌ (see error) | ✅ | ❌ (it does not traverse shapes) | ✅ | ❌ | ❌ | ❌ |
-| Enumeration (sh:in) | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Enumeration (sh:in) | ⚠️ (uses sh:class instead) | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ |
 | Language tags (sh:languageIn) | ❌ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | 
 | Linking shapes (sh:node) | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
 | Patterns (sh:pattern) | ⚠️ (based on the datatype) | ⚠️ (only used for IRIs) | ❌ | ❌ | ⚠️ | ❌ | ⚠️ |

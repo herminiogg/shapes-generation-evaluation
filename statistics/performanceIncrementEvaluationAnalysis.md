@@ -596,7 +596,7 @@ by(datasetShEx$ElapsedTime_ms, list(datasetShEx$Tool, datasetShEx$Size), shapiro
     ## data:  dd[x, ]
     ## W = 0.55447, p-value = 2.121e-08
 
-# Running the ART tool including post hoc tests and effect size for SHACL
+# Running the ART tool including post hoc tests and effect sizes for SHACL
 
 ``` r
 datasetSHACL$Size <- factor(datasetSHACL$Size)
@@ -662,6 +662,513 @@ contrasts
     ## 
     ## Degrees-of-freedom method: kenward-roger 
     ## P value adjustment: tukey method for comparing a family of 5 estimates
+
+# Comparing by Elapsed Time and Size using the ART tool on incremental SHACL generation
+
+``` r
+options(max.print=999999)
+
+datasetSHACL$Size <- factor(datasetSHACL$Size)
+datasetSHACL$Tool <- factor(datasetSHACL$Tool)
+
+model = art(ElapsedTime_ms ~ Tool + Size + Tool:Size, data=datasetSHACL)
+marginal = art.con(model, "Tool:Size", adjust="tukey")
+
+Result = anova(model)
+Result$part.eta.sq = with(Result, `Sum Sq`/(`Sum Sq` + `Sum Sq.res`))
+Result
+```
+
+    ## Analysis of Variance of Aligned Rank Transformed Data
+    ## 
+    ## Table Type: Anova Table (Type III tests) 
+    ## Model: No Repeated Measures (lm)
+    ## Response: art(ElapsedTime_ms)
+    ## 
+    ##             Df Df.res F value     Pr(>F) part.eta.sq    
+    ## 1 Tool       4    580  3778.8 < 2.22e-16     0.96305 ***
+    ## 2 Size       3    580  3044.8 < 2.22e-16     0.94029 ***
+    ## 3 Tool:Size 12    580  1817.4 < 2.22e-16     0.97409 ***
+    ## ---
+    ## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+lm = artlm(model, "Tool:Size")
+contrasts = summary(pairs(emmeans(lm, ~ Tool:Size)))
+
+contrasts$d = contrasts$estimate / sigmaHat(lm)
+contrasts
+```
+
+    ##  contrast                                     estimate   SE  df t.ratio p.value
+    ##  astrea Size1000 - RML2SHACL Size1000           -10.67 6.61 580  -1.615  0.9879
+    ##  astrea Size1000 - SCOOP Size1000                -8.57 6.61 580  -1.297  0.9992
+    ##  astrea Size1000 - sheXer Size1000              502.57 6.61 580  76.076  <.0001
+    ##  astrea Size1000 - ShExML Size1000              290.57 6.61 580  43.985  <.0001
+    ##  astrea Size1000 - astrea Size10000             102.40 6.61 580  15.501  <.0001
+    ##  astrea Size1000 - RML2SHACL Size10000           68.00 6.61 580  10.294  <.0001
+    ##  astrea Size1000 - SCOOP Size10000               83.17 6.61 580  12.589  <.0001
+    ##  astrea Size1000 - sheXer Size10000             472.57 6.61 580  71.535  <.0001
+    ##  astrea Size1000 - ShExML Size10000             260.57 6.61 580  39.443  <.0001
+    ##  astrea Size1000 - astrea Size100000            191.60 6.61 580  29.003  <.0001
+    ##  astrea Size1000 - RML2SHACL Size100000         186.63 6.61 580  28.252  <.0001
+    ##  astrea Size1000 - SCOOP Size100000             202.47 6.61 580  30.648  <.0001
+    ##  astrea Size1000 - sheXer Size100000            352.57 6.61 580  53.370  <.0001
+    ##  astrea Size1000 - ShExML Size100000            322.57 6.61 580  48.829  <.0001
+    ##  astrea Size1000 - astrea Size1000000           426.47 6.61 580  64.556  <.0001
+    ##  astrea Size1000 - RML2SHACL Size1000000        396.87 6.61 580  60.076  <.0001
+    ##  astrea Size1000 - SCOOP Size1000000            414.37 6.61 580  62.725  <.0001
+    ##  astrea Size1000 - sheXer Size1000000           -67.43 6.61 580 -10.208  <.0001
+    ##  astrea Size1000 - ShExML Size1000000           164.63 6.61 580  24.921  <.0001
+    ##  RML2SHACL Size1000 - SCOOP Size1000              2.10 6.61 580   0.318  1.0000
+    ##  RML2SHACL Size1000 - sheXer Size1000           513.23 6.61 580  77.691  <.0001
+    ##  RML2SHACL Size1000 - ShExML Size1000           301.23 6.61 580  45.599  <.0001
+    ##  RML2SHACL Size1000 - astrea Size10000          113.07 6.61 580  17.115  <.0001
+    ##  RML2SHACL Size1000 - RML2SHACL Size10000        78.67 6.61 580  11.908  <.0001
+    ##  RML2SHACL Size1000 - SCOOP Size10000            93.83 6.61 580  14.204  <.0001
+    ##  RML2SHACL Size1000 - sheXer Size10000          483.23 6.61 580  73.149  <.0001
+    ##  RML2SHACL Size1000 - ShExML Size10000          271.23 6.61 580  41.058  <.0001
+    ##  RML2SHACL Size1000 - astrea Size100000         202.27 6.61 580  30.618  <.0001
+    ##  RML2SHACL Size1000 - RML2SHACL Size100000      197.30 6.61 580  29.866  <.0001
+    ##  RML2SHACL Size1000 - SCOOP Size100000          213.13 6.61 580  32.263  <.0001
+    ##  RML2SHACL Size1000 - sheXer Size100000         363.23 6.61 580  54.984  <.0001
+    ##  RML2SHACL Size1000 - ShExML Size100000         333.23 6.61 580  50.443  <.0001
+    ##  RML2SHACL Size1000 - astrea Size1000000        437.13 6.61 580  66.171  <.0001
+    ##  RML2SHACL Size1000 - RML2SHACL Size1000000     407.53 6.61 580  61.690  <.0001
+    ##  RML2SHACL Size1000 - SCOOP Size1000000         425.03 6.61 580  64.339  <.0001
+    ##  RML2SHACL Size1000 - sheXer Size1000000        -56.77 6.61 580  -8.593  <.0001
+    ##  RML2SHACL Size1000 - ShExML Size1000000        175.30 6.61 580  26.536  <.0001
+    ##  SCOOP Size1000 - sheXer Size1000               511.13 6.61 580  77.373  <.0001
+    ##  SCOOP Size1000 - ShExML Size1000               299.13 6.61 580  45.281  <.0001
+    ##  SCOOP Size1000 - astrea Size10000              110.97 6.61 580  16.798  <.0001
+    ##  SCOOP Size1000 - RML2SHACL Size10000            76.57 6.61 580  11.590  <.0001
+    ##  SCOOP Size1000 - SCOOP Size10000                91.73 6.61 580  13.886  <.0001
+    ##  SCOOP Size1000 - sheXer Size10000              481.13 6.61 580  72.832  <.0001
+    ##  SCOOP Size1000 - ShExML Size10000              269.13 6.61 580  40.740  <.0001
+    ##  SCOOP Size1000 - astrea Size100000             200.17 6.61 580  30.300  <.0001
+    ##  SCOOP Size1000 - RML2SHACL Size100000          195.20 6.61 580  29.548  <.0001
+    ##  SCOOP Size1000 - SCOOP Size100000              211.03 6.61 580  31.945  <.0001
+    ##  SCOOP Size1000 - sheXer Size100000             361.13 6.61 580  54.667  <.0001
+    ##  SCOOP Size1000 - ShExML Size100000             331.13 6.61 580  50.125  <.0001
+    ##  SCOOP Size1000 - astrea Size1000000            435.03 6.61 580  65.853  <.0001
+    ##  SCOOP Size1000 - RML2SHACL Size1000000         405.43 6.61 580  61.373  <.0001
+    ##  SCOOP Size1000 - SCOOP Size1000000             422.93 6.61 580  64.022  <.0001
+    ##  SCOOP Size1000 - sheXer Size1000000            -58.87 6.61 580  -8.911  <.0001
+    ##  SCOOP Size1000 - ShExML Size1000000            173.20 6.61 580  26.218  <.0001
+    ##  sheXer Size1000 - ShExML Size1000             -212.00 6.61 580 -32.092  <.0001
+    ##  sheXer Size1000 - astrea Size10000            -400.17 6.61 580 -60.575  <.0001
+    ##  sheXer Size1000 - RML2SHACL Size10000         -434.57 6.61 580 -65.783  <.0001
+    ##  sheXer Size1000 - SCOOP Size10000             -419.40 6.61 580 -63.487  <.0001
+    ##  sheXer Size1000 - sheXer Size10000             -30.00 6.61 580  -4.541  0.0012
+    ##  sheXer Size1000 - ShExML Size10000            -242.00 6.61 580 -36.633  <.0001
+    ##  sheXer Size1000 - astrea Size100000           -310.97 6.61 580 -47.073  <.0001
+    ##  sheXer Size1000 - RML2SHACL Size100000        -315.93 6.61 580 -47.824  <.0001
+    ##  sheXer Size1000 - SCOOP Size100000            -300.10 6.61 580 -45.428  <.0001
+    ##  sheXer Size1000 - sheXer Size100000           -150.00 6.61 580 -22.706  <.0001
+    ##  sheXer Size1000 - ShExML Size100000           -180.00 6.61 580 -27.248  <.0001
+    ##  sheXer Size1000 - astrea Size1000000           -76.10 6.61 580 -11.520  <.0001
+    ##  sheXer Size1000 - RML2SHACL Size1000000       -105.70 6.61 580 -16.000  <.0001
+    ##  sheXer Size1000 - SCOOP Size1000000            -88.20 6.61 580 -13.351  <.0001
+    ##  sheXer Size1000 - sheXer Size1000000          -570.00 6.61 580 -86.284  <.0001
+    ##  sheXer Size1000 - ShExML Size1000000          -337.93 6.61 580 -51.155  <.0001
+    ##  ShExML Size1000 - astrea Size10000            -188.17 6.61 580 -28.484  <.0001
+    ##  ShExML Size1000 - RML2SHACL Size10000         -222.57 6.61 580 -33.691  <.0001
+    ##  ShExML Size1000 - SCOOP Size10000             -207.40 6.61 580 -31.395  <.0001
+    ##  ShExML Size1000 - sheXer Size10000             182.00 6.61 580  27.550  <.0001
+    ##  ShExML Size1000 - ShExML Size10000             -30.00 6.61 580  -4.541  0.0012
+    ##  ShExML Size1000 - astrea Size100000            -98.97 6.61 580 -14.981  <.0001
+    ##  ShExML Size1000 - RML2SHACL Size100000        -103.93 6.61 580 -15.733  <.0001
+    ##  ShExML Size1000 - SCOOP Size100000             -88.10 6.61 580 -13.336  <.0001
+    ##  ShExML Size1000 - sheXer Size100000             62.00 6.61 580   9.385  <.0001
+    ##  ShExML Size1000 - ShExML Size100000             32.00 6.61 580   4.844  0.0003
+    ##  ShExML Size1000 - astrea Size1000000           135.90 6.61 580  20.572  <.0001
+    ##  ShExML Size1000 - RML2SHACL Size1000000        106.30 6.61 580  16.091  <.0001
+    ##  ShExML Size1000 - SCOOP Size1000000            123.80 6.61 580  18.740  <.0001
+    ##  ShExML Size1000 - sheXer Size1000000          -358.00 6.61 580 -54.192  <.0001
+    ##  ShExML Size1000 - ShExML Size1000000          -125.93 6.61 580 -19.063  <.0001
+    ##  astrea Size10000 - RML2SHACL Size10000         -34.40 6.61 580  -5.207  <.0001
+    ##  astrea Size10000 - SCOOP Size10000             -19.23 6.61 580  -2.911  0.2861
+    ##  astrea Size10000 - sheXer Size10000            370.17 6.61 580  56.034  <.0001
+    ##  astrea Size10000 - ShExML Size10000            158.17 6.61 580  23.942  <.0001
+    ##  astrea Size10000 - astrea Size100000            89.20 6.61 580  13.503  <.0001
+    ##  astrea Size10000 - RML2SHACL Size100000         84.23 6.61 580  12.751  <.0001
+    ##  astrea Size10000 - SCOOP Size100000            100.07 6.61 580  15.148  <.0001
+    ##  astrea Size10000 - sheXer Size100000           250.17 6.61 580  37.869  <.0001
+    ##  astrea Size10000 - ShExML Size100000           220.17 6.61 580  33.328  <.0001
+    ##  astrea Size10000 - astrea Size1000000          324.07 6.61 580  49.056  <.0001
+    ##  astrea Size10000 - RML2SHACL Size1000000       294.47 6.61 580  44.575  <.0001
+    ##  astrea Size10000 - SCOOP Size1000000           311.97 6.61 580  47.224  <.0001
+    ##  astrea Size10000 - sheXer Size1000000         -169.83 6.61 580 -25.709  <.0001
+    ##  astrea Size10000 - ShExML Size1000000           62.23 6.61 580   9.421  <.0001
+    ##  RML2SHACL Size10000 - SCOOP Size10000           15.17 6.61 580   2.296  0.7368
+    ##  RML2SHACL Size10000 - sheXer Size10000         404.57 6.61 580  61.241  <.0001
+    ##  RML2SHACL Size10000 - ShExML Size10000         192.57 6.61 580  29.150  <.0001
+    ##  RML2SHACL Size10000 - astrea Size100000        123.60 6.61 580  18.710  <.0001
+    ##  RML2SHACL Size10000 - RML2SHACL Size100000     118.63 6.61 580  17.958  <.0001
+    ##  RML2SHACL Size10000 - SCOOP Size100000         134.47 6.61 580  20.355  <.0001
+    ##  RML2SHACL Size10000 - sheXer Size100000        284.57 6.61 580  43.076  <.0001
+    ##  RML2SHACL Size10000 - ShExML Size100000        254.57 6.61 580  38.535  <.0001
+    ##  RML2SHACL Size10000 - astrea Size1000000       358.47 6.61 580  54.263  <.0001
+    ##  RML2SHACL Size10000 - RML2SHACL Size1000000    328.87 6.61 580  49.782  <.0001
+    ##  RML2SHACL Size10000 - SCOOP Size1000000        346.37 6.61 580  52.431  <.0001
+    ##  RML2SHACL Size10000 - sheXer Size1000000      -135.43 6.61 580 -20.501  <.0001
+    ##  RML2SHACL Size10000 - ShExML Size1000000        96.63 6.61 580  14.628  <.0001
+    ##  SCOOP Size10000 - sheXer Size10000             389.40 6.61 580  58.945  <.0001
+    ##  SCOOP Size10000 - ShExML Size10000             177.40 6.61 580  26.854  <.0001
+    ##  SCOOP Size10000 - astrea Size100000            108.43 6.61 580  16.414  <.0001
+    ##  SCOOP Size10000 - RML2SHACL Size100000         103.47 6.61 580  15.662  <.0001
+    ##  SCOOP Size10000 - SCOOP Size100000             119.30 6.61 580  18.059  <.0001
+    ##  SCOOP Size10000 - sheXer Size100000            269.40 6.61 580  40.780  <.0001
+    ##  SCOOP Size10000 - ShExML Size100000            239.40 6.61 580  36.239  <.0001
+    ##  SCOOP Size10000 - astrea Size1000000           343.30 6.61 580  51.967  <.0001
+    ##  SCOOP Size10000 - RML2SHACL Size1000000        313.70 6.61 580  47.486  <.0001
+    ##  SCOOP Size10000 - SCOOP Size1000000            331.20 6.61 580  50.135  <.0001
+    ##  SCOOP Size10000 - sheXer Size1000000          -150.60 6.61 580 -22.797  <.0001
+    ##  SCOOP Size10000 - ShExML Size1000000            81.47 6.61 580  12.332  <.0001
+    ##  sheXer Size10000 - ShExML Size10000           -212.00 6.61 580 -32.092  <.0001
+    ##  sheXer Size10000 - astrea Size100000          -280.97 6.61 580 -42.531  <.0001
+    ##  sheXer Size10000 - RML2SHACL Size100000       -285.93 6.61 580 -43.283  <.0001
+    ##  sheXer Size10000 - SCOOP Size100000           -270.10 6.61 580 -40.886  <.0001
+    ##  sheXer Size10000 - sheXer Size100000          -120.00 6.61 580 -18.165  <.0001
+    ##  sheXer Size10000 - ShExML Size100000          -150.00 6.61 580 -22.706  <.0001
+    ##  sheXer Size10000 - astrea Size1000000          -46.10 6.61 580  -6.978  <.0001
+    ##  sheXer Size10000 - RML2SHACL Size1000000       -75.70 6.61 580 -11.459  <.0001
+    ##  sheXer Size10000 - SCOOP Size1000000           -58.20 6.61 580  -8.810  <.0001
+    ##  sheXer Size10000 - sheXer Size1000000         -540.00 6.61 580 -81.743  <.0001
+    ##  sheXer Size10000 - ShExML Size1000000         -307.93 6.61 580 -46.613  <.0001
+    ##  ShExML Size10000 - astrea Size100000           -68.97 6.61 580 -10.440  <.0001
+    ##  ShExML Size10000 - RML2SHACL Size100000        -73.93 6.61 580 -11.192  <.0001
+    ##  ShExML Size10000 - SCOOP Size100000            -58.10 6.61 580  -8.795  <.0001
+    ##  ShExML Size10000 - sheXer Size100000            92.00 6.61 580  13.927  <.0001
+    ##  ShExML Size10000 - ShExML Size100000            62.00 6.61 580   9.385  <.0001
+    ##  ShExML Size10000 - astrea Size1000000          165.90 6.61 580  25.113  <.0001
+    ##  ShExML Size10000 - RML2SHACL Size1000000       136.30 6.61 580  20.632  <.0001
+    ##  ShExML Size10000 - SCOOP Size1000000           153.80 6.61 580  23.281  <.0001
+    ##  ShExML Size10000 - sheXer Size1000000         -328.00 6.61 580 -49.651  <.0001
+    ##  ShExML Size10000 - ShExML Size1000000          -95.93 6.61 580 -14.522  <.0001
+    ##  astrea Size100000 - RML2SHACL Size100000        -4.97 6.61 580  -0.752  1.0000
+    ##  astrea Size100000 - SCOOP Size100000            10.87 6.61 580   1.645  0.9851
+    ##  astrea Size100000 - sheXer Size100000          160.97 6.61 580  24.366  <.0001
+    ##  astrea Size100000 - ShExML Size100000          130.97 6.61 580  19.825  <.0001
+    ##  astrea Size100000 - astrea Size1000000         234.87 6.61 580  35.553  <.0001
+    ##  astrea Size100000 - RML2SHACL Size1000000      205.27 6.61 580  31.072  <.0001
+    ##  astrea Size100000 - SCOOP Size1000000          222.77 6.61 580  33.721  <.0001
+    ##  astrea Size100000 - sheXer Size1000000        -259.03 6.61 580 -39.211  <.0001
+    ##  astrea Size100000 - ShExML Size1000000         -26.97 6.61 580  -4.082  0.0078
+    ##  RML2SHACL Size100000 - SCOOP Size100000         15.83 6.61 580   2.397  0.6637
+    ##  RML2SHACL Size100000 - sheXer Size100000       165.93 6.61 580  25.118  <.0001
+    ##  RML2SHACL Size100000 - ShExML Size100000       135.93 6.61 580  20.577  <.0001
+    ##  RML2SHACL Size100000 - astrea Size1000000      239.83 6.61 580  36.305  <.0001
+    ##  RML2SHACL Size100000 - RML2SHACL Size1000000   210.23 6.61 580  31.824  <.0001
+    ##  RML2SHACL Size100000 - SCOOP Size1000000       227.73 6.61 580  34.473  <.0001
+    ##  RML2SHACL Size100000 - sheXer Size1000000     -254.07 6.61 580 -38.459  <.0001
+    ##  RML2SHACL Size100000 - ShExML Size1000000      -22.00 6.61 580  -3.330  0.1004
+    ##  SCOOP Size100000 - sheXer Size100000           150.10 6.61 580  22.721  <.0001
+    ##  SCOOP Size100000 - ShExML Size100000           120.10 6.61 580  18.180  <.0001
+    ##  SCOOP Size100000 - astrea Size1000000          224.00 6.61 580  33.908  <.0001
+    ##  SCOOP Size100000 - RML2SHACL Size1000000       194.40 6.61 580  29.427  <.0001
+    ##  SCOOP Size100000 - SCOOP Size1000000           211.90 6.61 580  32.076  <.0001
+    ##  SCOOP Size100000 - sheXer Size1000000         -269.90 6.61 580 -40.856  <.0001
+    ##  SCOOP Size100000 - ShExML Size1000000          -37.83 6.61 580  -5.727  <.0001
+    ##  sheXer Size100000 - ShExML Size100000          -30.00 6.61 580  -4.541  0.0012
+    ##  sheXer Size100000 - astrea Size1000000          73.90 6.61 580  11.187  <.0001
+    ##  sheXer Size100000 - RML2SHACL Size1000000       44.30 6.61 580   6.706  <.0001
+    ##  sheXer Size100000 - SCOOP Size1000000           61.80 6.61 580   9.355  <.0001
+    ##  sheXer Size100000 - sheXer Size1000000        -420.00 6.61 580 -63.578  <.0001
+    ##  sheXer Size100000 - ShExML Size1000000        -187.93 6.61 580 -28.448  <.0001
+    ##  ShExML Size100000 - astrea Size1000000         103.90 6.61 580  15.728  <.0001
+    ##  ShExML Size100000 - RML2SHACL Size1000000       74.30 6.61 580  11.247  <.0001
+    ##  ShExML Size100000 - SCOOP Size1000000           91.80 6.61 580  13.896  <.0001
+    ##  ShExML Size100000 - sheXer Size1000000        -390.00 6.61 580 -59.036  <.0001
+    ##  ShExML Size100000 - ShExML Size1000000        -157.93 6.61 580 -23.907  <.0001
+    ##  astrea Size1000000 - RML2SHACL Size1000000     -29.60 6.61 580  -4.481  0.0015
+    ##  astrea Size1000000 - SCOOP Size1000000         -12.10 6.61 580  -1.832  0.9550
+    ##  astrea Size1000000 - sheXer Size1000000       -493.90 6.61 580 -74.764  <.0001
+    ##  astrea Size1000000 - ShExML Size1000000       -261.83 6.61 580 -39.635  <.0001
+    ##  RML2SHACL Size1000000 - SCOOP Size1000000       17.50 6.61 580   2.649  0.4686
+    ##  RML2SHACL Size1000000 - sheXer Size1000000    -464.30 6.61 580 -70.283  <.0001
+    ##  RML2SHACL Size1000000 - ShExML Size1000000    -232.23 6.61 580 -35.154  <.0001
+    ##  SCOOP Size1000000 - sheXer Size1000000        -481.80 6.61 580 -72.933  <.0001
+    ##  SCOOP Size1000000 - ShExML Size1000000        -249.73 6.61 580 -37.803  <.0001
+    ##  sheXer Size1000000 - ShExML Size1000000        232.07 6.61 580  35.129  <.0001
+    ##         d
+    ##   -0.4169
+    ##   -0.3348
+    ##   19.6428
+    ##   11.3568
+    ##    4.0023
+    ##    2.6578
+    ##    3.2506
+    ##   18.4702
+    ##   10.1842
+    ##    7.4887
+    ##    7.2945
+    ##    7.9134
+    ##   13.7800
+    ##   12.6075
+    ##   16.6684
+    ##   15.5115
+    ##   16.1955
+    ##   -2.6356
+    ##    6.4347
+    ##    0.0821
+    ##   20.0597
+    ##   11.7737
+    ##    4.4192
+    ##    3.0747
+    ##    3.6675
+    ##   18.8871
+    ##   10.6011
+    ##    7.9056
+    ##    7.7114
+    ##    8.3303
+    ##   14.1969
+    ##   13.0244
+    ##   17.0853
+    ##   15.9284
+    ##   16.6124
+    ##   -2.2187
+    ##    6.8516
+    ##   19.9776
+    ##   11.6916
+    ##    4.3371
+    ##    2.9926
+    ##    3.5854
+    ##   18.8050
+    ##   10.5190
+    ##    7.8235
+    ##    7.6294
+    ##    8.2482
+    ##   14.1149
+    ##   12.9423
+    ##   17.0032
+    ##   15.8463
+    ##   16.5303
+    ##   -2.3008
+    ##    6.7695
+    ##   -8.2860
+    ##  -15.6405
+    ##  -16.9850
+    ##  -16.3922
+    ##   -1.1725
+    ##   -9.4585
+    ##  -12.1541
+    ##  -12.3482
+    ##  -11.7294
+    ##   -5.8627
+    ##   -7.0353
+    ##   -2.9744
+    ##   -4.1313
+    ##   -3.4473
+    ##  -22.2784
+    ##  -13.2081
+    ##   -7.3545
+    ##   -8.6990
+    ##   -8.1062
+    ##    7.1134
+    ##   -1.1725
+    ##   -3.8681
+    ##   -4.0622
+    ##   -3.4434
+    ##    2.4233
+    ##    1.2507
+    ##    5.3116
+    ##    4.1547
+    ##    4.8387
+    ##  -13.9924
+    ##   -4.9221
+    ##   -1.3445
+    ##   -0.7517
+    ##   14.4679
+    ##    6.1819
+    ##    3.4864
+    ##    3.2923
+    ##    3.9111
+    ##    9.7777
+    ##    8.6052
+    ##   12.6661
+    ##   11.5092
+    ##   12.1932
+    ##   -6.6379
+    ##    2.4324
+    ##    0.5928
+    ##   15.8124
+    ##    7.5264
+    ##    4.8309
+    ##    4.6368
+    ##    5.2556
+    ##   11.1223
+    ##    9.9497
+    ##   14.0106
+    ##   12.8537
+    ##   13.5377
+    ##   -5.2934
+    ##    3.7769
+    ##   15.2197
+    ##    6.9337
+    ##    4.2381
+    ##    4.0440
+    ##    4.6628
+    ##   10.5295
+    ##    9.3569
+    ##   13.4178
+    ##   12.2609
+    ##   12.9449
+    ##   -5.8862
+    ##    3.1841
+    ##   -8.2860
+    ##  -10.9815
+    ##  -11.1757
+    ##  -10.5568
+    ##   -4.6902
+    ##   -5.8627
+    ##   -1.8018
+    ##   -2.9587
+    ##   -2.2747
+    ##  -21.1058
+    ##  -12.0355
+    ##   -2.6956
+    ##   -2.8897
+    ##   -2.2708
+    ##    3.5958
+    ##    2.4233
+    ##    6.4842
+    ##    5.3273
+    ##    6.0113
+    ##  -12.8198
+    ##   -3.7495
+    ##   -0.1941
+    ##    0.4247
+    ##    6.2914
+    ##    5.1188
+    ##    9.1797
+    ##    8.0228
+    ##    8.7068
+    ##  -10.1243
+    ##   -1.0540
+    ##    0.6188
+    ##    6.4855
+    ##    5.3129
+    ##    9.3739
+    ##    8.2169
+    ##    8.9009
+    ##   -9.9302
+    ##   -0.8599
+    ##    5.8666
+    ##    4.6941
+    ##    8.7550
+    ##    7.5981
+    ##    8.2821
+    ##  -10.5490
+    ##   -1.4787
+    ##   -1.1725
+    ##    2.8884
+    ##    1.7315
+    ##    2.4154
+    ##  -16.4156
+    ##   -7.3454
+    ##    4.0609
+    ##    2.9040
+    ##    3.5880
+    ##  -15.2431
+    ##   -6.1728
+    ##   -1.1569
+    ##   -0.4729
+    ##  -19.3040
+    ##  -10.2337
+    ##    0.6840
+    ##  -18.1471
+    ##   -9.0768
+    ##  -18.8311
+    ##   -9.7608
+    ##    9.0703
+    ## 
+    ## P value adjustment: tukey method for comparing a family of 20 estimates
+
+``` r
+# This is to ensure that we can use the Cohen's D calculations as the homoscedasticity of the linear model is guaranteed
+bptest(lm)
+```
+
+    ## 
+    ##  studentized Breusch-Pagan test
+    ## 
+    ## data:  lm
+    ## BP = 125.85, df = 19, p-value < 2.2e-16
+
+# Unstandardised effect sizes
+
+``` r
+by(datasetSHACL, datasetSHACL$Size, function(x) {
+  comparison <- c()
+  diff_means <- c()
+  for (i in unique(x$Tool)) {
+    m1 <- mean(x[(x$Tool == i), ]$ElapsedTime_ms)
+    for (j in unique(x$Tool)) {
+      if(i != j) {
+        m2 <- mean(x[(x$Tool == j), ]$ElapsedTime_ms)
+        if(m2 - m1 > 0) { # this avoids including the same comparison twice
+          comparison <- append(comparison, paste(i, "-", j))
+          diff_means <- append(diff_means, m2 - m1)
+        }
+      }
+    }
+  }
+  data.frame(comparison, diff_means)
+})
+```
+
+    ## datasetSHACL$Size: 1000
+    ##            comparison diff_means
+    ## 1     sheXer - ShExML  1193.4000
+    ## 2     sheXer - astrea   958.7667
+    ## 3      sheXer - SCOOP   184.5333
+    ## 4  RML2SHACL - sheXer   418.1667
+    ## 5  RML2SHACL - ShExML  1611.5667
+    ## 6  RML2SHACL - astrea  1376.9333
+    ## 7   RML2SHACL - SCOOP   602.7000
+    ## 8     astrea - ShExML   234.6333
+    ## 9      SCOOP - ShExML  1008.8667
+    ## 10     SCOOP - astrea   774.2333
+    ## ------------------------------------------------------------ 
+    ## datasetSHACL$Size: 10000
+    ##            comparison diff_means
+    ## 1  RML2SHACL - sheXer  4552.4667
+    ## 2  RML2SHACL - ShExML  3000.8000
+    ## 3  RML2SHACL - astrea  1263.0667
+    ## 4   RML2SHACL - SCOOP   606.7000
+    ## 5     ShExML - sheXer  1551.6667
+    ## 6     astrea - sheXer  3289.4000
+    ## 7     astrea - ShExML  1737.7333
+    ## 8      SCOOP - sheXer  3945.7667
+    ## 9      SCOOP - ShExML  2394.1000
+    ## 10     SCOOP - astrea   656.3667
+    ## ------------------------------------------------------------ 
+    ## datasetSHACL$Size: 100000
+    ##            comparison diff_means
+    ## 1  RML2SHACL - sheXer 47285.3333
+    ## 2  RML2SHACL - ShExML  8440.1667
+    ## 3  RML2SHACL - astrea  1290.5667
+    ## 4   RML2SHACL - SCOOP   565.2333
+    ## 5     ShExML - sheXer 38845.1667
+    ## 6     astrea - sheXer 45994.7667
+    ## 7     astrea - ShExML  7149.6000
+    ## 8      SCOOP - sheXer 46720.1000
+    ## 9      SCOOP - ShExML  7874.9333
+    ## 10     SCOOP - astrea   725.3333
+    ## ------------------------------------------------------------ 
+    ## datasetSHACL$Size: 1000000
+    ##            comparison  diff_means
+    ## 1  RML2SHACL - sheXer 181117.6667
+    ## 2  RML2SHACL - ShExML  55479.3333
+    ## 3  RML2SHACL - astrea   1277.6333
+    ## 4   RML2SHACL - SCOOP    576.4000
+    ## 5     ShExML - sheXer 125638.3333
+    ## 6     astrea - sheXer 179840.0333
+    ## 7     astrea - ShExML  54201.7000
+    ## 8      SCOOP - sheXer 180541.2667
+    ## 9      SCOOP - ShExML  54902.9333
+    ## 10     SCOOP - astrea    701.2333
 
 # Comparing ShExML and sheXer by Elapsed Time and Size using the ART tool on incremental SHACL generation
 
@@ -902,15 +1409,54 @@ contrasts
     ## 
     ## P value adjustment: tukey method for comparing a family of 8 estimates
 
-# Setting up the logarithmic scale
+``` r
+# This is to ensure that we can use the Cohen's D calculations as the homoscedasticity of the linear model is guaranteed
+bptest(lm)
+```
+
+    ## 
+    ##  studentized Breusch-Pagan test
+    ## 
+    ## data:  lm
+    ## BP = 7.4591, df = 7, p-value = 0.3827
+
+# Unstandardised effect sizes
 
 ``` r
-datasetSHACLLog <- datasetSHACL
-datasetSHACLLog$ElapsedTime_ms <- log(datasetSHACLLog$ElapsedTime_ms)
-
-datasetShExLog <- datasetShEx
-datasetShExLog$ElapsedTime_ms <- log(datasetShExLog$ElapsedTime_ms)
+by(datasetShEx, datasetShEx$Size, function(x) {
+  comparison <- c()
+  diff_means <- c()
+  for (i in unique(x$Tool)) {
+    m1 <- mean(x[(x$Tool == i), ]$ElapsedTime_ms)
+    for (j in unique(x$Tool)) {
+      if(i != j) {
+        m2 <- mean(x[(x$Tool == j), ]$ElapsedTime_ms)
+        if(m2 - m1 > 0) { # this avoids including the same comparison twice
+          comparison <- append(comparison, paste(i, "-", j))
+          diff_means <- append(diff_means, m2 - m1)
+        }
+      }
+    }
+  }
+  data.frame(comparison, diff_means)
+})
 ```
+
+    ## datasetShEx$Size: 1000
+    ##        comparison diff_means
+    ## 1 sheXer - ShExML   1076.767
+    ## ------------------------------------------------------------ 
+    ## datasetShEx$Size: 10000
+    ##        comparison diff_means
+    ## 1 ShExML - sheXer   1750.633
+    ## ------------------------------------------------------------ 
+    ## datasetShEx$Size: 100000
+    ##        comparison diff_means
+    ## 1 ShExML - sheXer   38896.87
+    ## ------------------------------------------------------------ 
+    ## datasetShEx$Size: 1000000
+    ##        comparison diff_means
+    ## 1 ShExML - sheXer   122137.5
 
 # Comparing linear scale on SHACL
 
@@ -921,19 +1467,20 @@ ggline(datasetSHACL, x = "Size",
       add = "mean_sd")
 ```
 
-![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 # Comparing logarithmic scale on SHACL
 
 ``` r
-ggline(datasetSHACLLog, x = "Size",
-      y = "ElapsedTime_ms",
-      ylab = "Elapsed Time (log(ms))",
-      color = "Tool",
-      add = "mean_sd")
+ggline(datasetSHACL, x = "Size",
+                y = "ElapsedTime_ms",
+                ylab = "Elapsed Time (ms)",
+                yscale = "log10",
+                color = "Tool",
+                add = c("mean_se"))
 ```
 
-![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 # Comparing linear scale on ShEx
 
@@ -944,19 +1491,20 @@ ggline(datasetShEx, x = "Size",
       add = "mean_sd")
 ```
 
-![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 # Comparing logarithmic scale on ShEx
 
 ``` r
-ggline(datasetShExLog, x = "Size",
+ggline(datasetShEx, x = "Size",
       y = "ElapsedTime_ms",
-      ylab = "Elapsed Time (log(ms))",
+      ylab = "Elapsed Time (ms)",
+      yscale = "log10",
       color = "Tool",
       add = "mean_sd")
 ```
 
-![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 # Comparing ShEx and SHACL generation times on sheXer
 
@@ -1079,21 +1627,20 @@ ggline(datasetShexer, x = "Size",
       add = "mean_sd")
 ```
 
-![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-17-1.png)
+![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-19-1.png)
 
 # Comparing logarithmic scale on sheXer
 
 ``` r
-datasetShexerLog <- datasetShexer
-datasetShexerLog$ElapsedTime_ms <- log(datasetShexerLog$ElapsedTime_ms)
-
-ggline(datasetShexerLog, x = "Size",
+ggline(datasetShexer, x = "Size",
       y = "ElapsedTime_ms",
+      ylab = "Elapsed Time (ms)",
+      yscale = "log10",
       color = "ShapesLanguage",
       add = "mean_sd")
 ```
 
-![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-18-1.png)
+![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-20-1.png)
 
 # Comparing ShEx and SHACL generation times on ShExML
 
@@ -1216,18 +1763,17 @@ ggline(datasetShExML, x = "Size",
       add = "mean_sd")
 ```
 
-![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-21-1.png)
+![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-23-1.png)
 
 # Comparing logarithmic scale on ShExML
 
 ``` r
-datasetShExMLLog <- datasetShExML
-datasetShExMLLog$ElapsedTime_ms <- log(datasetShExMLLog$ElapsedTime_ms)
-
-ggline(datasetShExMLLog, x = "Size",
+ggline(datasetShExML, x = "Size",
       y = "ElapsedTime_ms",
+      ylab = "Elapsed Time (ms)",
+      yscale = "log10",
       color = "ShapesLanguage",
       add = "mean_sd")
 ```
 
-![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-22-1.png)
+![](performanceIncrementEvaluationAnalysis_files/figure-markdown_github/unnamed-chunk-24-1.png)

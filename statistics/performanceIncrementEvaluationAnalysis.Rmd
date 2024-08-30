@@ -3,9 +3,9 @@ title: "Performance on incremental size input for Shapes generation"
 author: "Herminio García-González"
 date: "2024-07-05"
 output: 
+  html_document: default
   md_document:
     variant: markdown_github
-  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -19,6 +19,7 @@ library(ARTool)
 library(emmeans)
 library(car)
 library(ggpubr)
+library(lmtest)
 ```
 
 # Set up
@@ -49,7 +50,7 @@ by(datasetShEx$ElapsedTime_ms, list(datasetShEx$Tool, datasetShEx$Size), shapiro
 ```
 
 
-# Running the ART tool including post hoc tests and effect size for SHACL
+# Running the ART tool including post hoc tests and effect sizes for SHACL
 ```{r}
 datasetSHACL$Size <- factor(datasetSHACL$Size)
 datasetSHACL$Tool <- factor(datasetSHACL$Tool)
@@ -68,6 +69,52 @@ contrasts = summary(pairs(emmeans(lm, ~ Tool)))
 contrasts$d = contrasts$estimate / sigmaHat(lm)
 contrasts
 ```
+
+# Comparing by Elapsed Time and Size using the ART tool on incremental SHACL generation
+```{r}
+options(max.print=999999)
+
+datasetSHACL$Size <- factor(datasetSHACL$Size)
+datasetSHACL$Tool <- factor(datasetSHACL$Tool)
+
+model = art(ElapsedTime_ms ~ Tool + Size + Tool:Size, data=datasetSHACL)
+marginal = art.con(model, "Tool:Size", adjust="tukey")
+
+Result = anova(model)
+Result$part.eta.sq = with(Result, `Sum Sq`/(`Sum Sq` + `Sum Sq.res`))
+Result
+
+lm = artlm(model, "Tool:Size")
+contrasts = summary(pairs(emmeans(lm, ~ Tool:Size)))
+
+contrasts$d = contrasts$estimate / sigmaHat(lm)
+contrasts
+
+# This is to ensure that we can use the Cohen's D calculations as the homoscedasticity of the linear model is guaranteed
+bptest(lm)
+```
+
+# Unstandardised effect sizes 
+```{r}
+by(datasetSHACL, datasetSHACL$Size, function(x) {
+  comparison <- c()
+  diff_means <- c()
+  for (i in unique(x$Tool)) {
+    m1 <- mean(x[(x$Tool == i), ]$ElapsedTime_ms)
+    for (j in unique(x$Tool)) {
+      if(i != j) {
+        m2 <- mean(x[(x$Tool == j), ]$ElapsedTime_ms)
+        if(m2 - m1 > 0) { # this avoids including the same comparison twice
+          comparison <- append(comparison, paste(i, "-", j))
+          diff_means <- append(diff_means, m2 - m1)
+        }
+      }
+    }
+  }
+  data.frame(comparison, diff_means)
+})
+```
+
 
 # Comparing ShExML and sheXer by Elapsed Time and Size using the ART tool on incremental SHACL generation
 ```{r}
@@ -125,15 +172,30 @@ contrasts = summary(pairs(emmeans(lm, ~ Tool:Size)))
 
 contrasts$d = contrasts$estimate / sigmaHat(lm)
 contrasts
+
+# This is to ensure that we can use the Cohen's D calculations as the homoscedasticity of the linear model is guaranteed
+bptest(lm)
 ```
 
-# Setting up the logarithmic scale
+# Unstandardised effect sizes 
 ```{r}
-datasetSHACLLog <- datasetSHACL
-datasetSHACLLog$ElapsedTime_ms <- log(datasetSHACLLog$ElapsedTime_ms)
-
-datasetShExLog <- datasetShEx
-datasetShExLog$ElapsedTime_ms <- log(datasetShExLog$ElapsedTime_ms)
+by(datasetShEx, datasetShEx$Size, function(x) {
+  comparison <- c()
+  diff_means <- c()
+  for (i in unique(x$Tool)) {
+    m1 <- mean(x[(x$Tool == i), ]$ElapsedTime_ms)
+    for (j in unique(x$Tool)) {
+      if(i != j) {
+        m2 <- mean(x[(x$Tool == j), ]$ElapsedTime_ms)
+        if(m2 - m1 > 0) { # this avoids including the same comparison twice
+          comparison <- append(comparison, paste(i, "-", j))
+          diff_means <- append(diff_means, m2 - m1)
+        }
+      }
+    }
+  }
+  data.frame(comparison, diff_means)
+})
 ```
 
 # Comparing linear scale on SHACL
@@ -146,11 +208,12 @@ ggline(datasetSHACL, x = "Size",
 
 # Comparing logarithmic scale on SHACL
 ```{r}
-ggline(datasetSHACLLog, x = "Size",
-      y = "ElapsedTime_ms",
-      ylab = "Elapsed Time (log(ms))",
-      color = "Tool",
-      add = "mean_sd")
+ggline(datasetSHACL, x = "Size",
+                y = "ElapsedTime_ms",
+                ylab = "Elapsed Time (ms)",
+                yscale = "log10",
+                color = "Tool",
+                add = c("mean_se"))
 ```
 
 # Comparing linear scale on ShEx
@@ -163,9 +226,10 @@ ggline(datasetShEx, x = "Size",
 
 # Comparing logarithmic scale on ShEx
 ```{r}
-ggline(datasetShExLog, x = "Size",
+ggline(datasetShEx, x = "Size",
       y = "ElapsedTime_ms",
-      ylab = "Elapsed Time (log(ms))",
+      ylab = "Elapsed Time (ms)",
+      yscale = "log10",
       color = "Tool",
       add = "mean_sd")
 ```
@@ -216,11 +280,10 @@ ggline(datasetShexer, x = "Size",
 
 # Comparing logarithmic scale on sheXer
 ```{r}
-datasetShexerLog <- datasetShexer
-datasetShexerLog$ElapsedTime_ms <- log(datasetShexerLog$ElapsedTime_ms)
-
-ggline(datasetShexerLog, x = "Size",
+ggline(datasetShexer, x = "Size",
       y = "ElapsedTime_ms",
+      ylab = "Elapsed Time (ms)",
+      yscale = "log10",
       color = "ShapesLanguage",
       add = "mean_sd")
 ```
@@ -272,11 +335,10 @@ ggline(datasetShExML, x = "Size",
 
 # Comparing logarithmic scale on ShExML
 ```{r}
-datasetShExMLLog <- datasetShExML
-datasetShExMLLog$ElapsedTime_ms <- log(datasetShExMLLog$ElapsedTime_ms)
-
-ggline(datasetShExMLLog, x = "Size",
+ggline(datasetShExML, x = "Size",
       y = "ElapsedTime_ms",
+      ylab = "Elapsed Time (ms)",
+      yscale = "log10",
       color = "ShapesLanguage",
       add = "mean_sd")
 ```
