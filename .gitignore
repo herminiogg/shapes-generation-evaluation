@@ -35,3 +35,8 @@ data/*.ttl
 !data/films_extended.ttl
 !data/films_1000_entries.json
 !data/films_1000_entries.ttl
+
+# Latex
+*.aux
+*.bbl
+*.synctex.gz

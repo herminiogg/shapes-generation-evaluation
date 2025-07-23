@@ -1,5 +1,5 @@
 # Shape generation evaluation: scripts and results
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15196663.svg)](https://doi.org/10.5281/zenodo.15196663)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16356589.svg)](https://doi.org/10.5281/zenodo.16356589)
 
 This repository collects the used scripts, resources and results for the evaluation of shapes generation.
 
