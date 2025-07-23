@@ -1,0 +1,74 @@
+\documentclass[10pt,a4paper]{article}
+
+\begin{document}
+
+\begin{table}[h]
+\centering
+\caption{This table captures the results of the post-hoc tests derived from the ART analysis for the SHACL generation where $p$ represents the p-value, $p$ int. the significance interpretation of the p-value according to the conventional significance levels (* meaning significant differences when $p < 0.05$ and *** very significant differences when $p < 0.001$), and $|\bar{x}_1 - \bar{x}_2|$ as the unstandardised measure of the effect size measured in milliseconds.}
+\begin{tabular}{llrrrr}
+Input size & Contrast & $p$ & $p$ int. & $|\bar{x}_1 - \bar{x}_2|$  \\
+\hline
+1000 & Astrea - RML2SHACL & 0.9879 &  & 1376.9333 &  \\
+     & Astrea - SCOOP & 0.9992 &  & 774.2333 \\
+     & Astrea - sheXer & \textless 0.0001 & *** & 958.7667 \\
+     & Astrea - ShExML & \textless 0.0001 & *** & 234.6333  \\
+     & RML2SHACL - SCOOP & 1.0000 & & 602.7000 \\
+     & RML2SHACL - sheXer & \textless 0.0001 & *** & 418.1667 \\
+     & RML2SHACL - ShExML & \textless 0.0001 & *** & 1611.5667 \\
+     & SCOOP - sheXer & \textless 0.0001 & *** & 184.5333 \\
+     & SCOOP - ShExML & \textless 0.0001 & *** & 1008.8667 \\
+     & sheXer - ShExML & \textless 0.0001 & *** & 1193.4000 \\
+\hline
+10000 & Astrea - RML2SHACL & \textless 0.0001 & *** & 1263.0667 \\
+      & Astrea - SCOOP & 0.2861 &  & 656.3667 \\
+      & Astrea - sheXer & \textless 0.0001 & *** & 3289.4000 \\
+      & Astrea - ShExML & \textless 0.0001 & *** & 1737.7333 \\
+      & RML2SHACL - SCOOP & 0.7368 &  & 606.7000 \\
+      & RML2SHACL - sheXer & \textless 0.0001 & *** & 4552.4667 \\
+      & RML2SHACL - ShExML & \textless 0.0001 & *** &  3000.8000 \\
+      & SCOOP - sheXer & \textless 0.0001 & *** & 3945.7667 \\
+      & SCOOP - ShExML & \textless 0.0001 & *** & 2394.1000 \\
+      & sheXer - ShExML & \textless 0.0001 & *** & 1551.6667 \\
+\hline
+100000 & Astrea - RML2SHACL & 1.0000 & & 1290.5667  \\
+       & Astrea - SCOOP & 0.9851 & & 725.3333 \\
+       & Astrea - sheXer & \textless 0.0001 & *** & 45994.7667 \\
+       & Astrea - ShExML & \textless 0.0001 & *** & 7149.6000 \\
+       & RML2SHACL - SCOOP & 0.6637 & & 565.2333 & \\
+       & RML2SHACL - sheXer & \textless 0.0001 & *** & 47285.3333 \\
+       & RML2SHACL - ShExML & \textless 0.0001 & *** & 8440.1667 \\
+       & SCOOP - sheXer & \textless 0.0001 & *** & 46720.1000 \\
+       & SCOOP - ShExML & \textless 0.0001 & *** & 7874.9333 \\
+       & sheXer - ShExML & \textless 0.0001 & *** & 38845.1667 \\
+\hline
+1000000 & Astrea - RML2SHACL & 0.0015 & * & 1277.6333 \\
+        & Astrea - SCOOP & 0.9550 & & 701.2333 \\
+        & Astrea - sheXer & \textless 0.0001 & *** & 179840.0333 \\
+        & Astrea - ShExML & \textless 0.0001 & *** & 54201.7000 \\
+        & RML2SHACL - SCOOP & 0.4686 & & 576.4000 \\
+        & RML2SHACL - sheXer & \textless 0.0001 & *** & 181117.6667 \\
+        & RML2SHACL - ShExML & \textless 0.0001 & *** & 55479.3333 \\
+        & SCOOP - sheXer & \textless 0.0001 & *** & 180541.2667 \\
+        & SCOOP - ShExML & \textless 0.0001 & *** & 54902.9333 \\
+        & sheXer - ShExML & \textless 0.0001 & *** & 125638.3333 \\
+\hline
+\end{tabular}
+\label{tab:postHocSHACL}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{This table captures the results of the post-hoc tests derived from ART analysis for the ShEx generation where $p$ represents the p-value, $p$ int. the significance interpretation of the p-value according to the conventional significance levels (* meaning significant differences when $p < 0.05$ and *** very significant differences when $p < 0.001$), and $|\bar{x}_1 - \bar{x}_2|$ as the unstandardised measure of the effect size measured in milliseconds.}
+\begin{tabular}{llrrrr}
+Contrast & Input size & $p$ & $p$ int. & $|\bar{x}_1 - \bar{x}_2|$ \\
+\hline
+sheXer - ShExML & 1000 & \textless 0.0001 & *** & 1076.767 \\
+                & 10000 & \textless 0.0001 & *** & 1750.633 \\
+                & 100000 & \textless 0.0001 & *** & 38896.87 \\
+                & 1000000 & \textless 0.0001 & *** & 122137.5 \\
+\hline
+\end{tabular}
+\label{tab:postHocShEx}
+\end{table}
+
+\end{document}
